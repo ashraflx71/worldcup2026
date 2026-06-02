@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World Cup 2026 | AI Premium Hub</title>
     
-    <!-- ميتات السيو الصاروخي وتهيئة الـ PWA -->
+    <!-- Meta للـ PWA والسيو الصاروخي -->
     <meta name="theme-color" content="#0a0a0a">
     <meta name="description" content="منصة كأس العالم 2026 الذكية - متابعة حية، توقعات الجماهير، ومولد محتوى السيو الاحترافي.">
     <meta name="apple-mobile-web-app-capable" content="yes">
     
-    <!-- الخطوط الاحترافية -->
+    <!-- الخطوط -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
@@ -91,13 +91,19 @@
             padding-right: 8px;
         }
 
-        /* --- 1. قسم المباريات المباشرة --- */
+        /* --- قسم المباريات المباشرة --- */
         .match-box {
             background: #161616;
             border-radius: 12px;
             padding: 15px;
             margin-bottom: 12px;
             border: 1px solid #252525;
+            transition: all 0.3s ease;
+        }
+
+        .match-box.active {
+            border-color: var(--neon-green);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
         }
 
         .match-info {
@@ -143,7 +149,7 @@
             animation: pulse 1.2s infinite;
         }
 
-        /* --- 2. محرك التوقعات المباشر --- */
+        /* --- محرك التوقعات --- */
         .predict-row {
             display: flex;
             align-items: center;
@@ -169,7 +175,7 @@
             outline: none;
         }
 
-        /* --- 3. مصنع محتوى السيو (SEO Factory) --- */
+        /* --- مصنع محتوى السيو --- */
         .form-label {
             font-size: 0.85rem;
             color: var(--text-dim);
@@ -210,6 +216,7 @@
             background: var(--gold-royal);
             color: #000;
             box-shadow: 0 0 15px var(--gold-royal);
+            transform: scale(0.98);
         }
 
         .output-box {
@@ -225,7 +232,47 @@
             overflow-y: auto;
         }
 
-        /* --- Navigation Bar للهواتف --- */
+        /* --- شريط التحديث الحي --- */
+        .update-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px;
+            background: rgba(57, 255, 20, 0.1);
+            border: 1px solid var(--neon-green);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: var(--neon-green);
+            margin-bottom: 15px;
+        }
+
+        .update-status.updating {
+            background: rgba(0, 243, 255, 0.1);
+            border-color: var(--neon-blue);
+            color: var(--neon-blue);
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--neon-green);
+            animation: pulse 1s infinite;
+        }
+
+        .update-status.updating .status-indicator {
+            background: var(--neon-blue);
+        }
+
+        .last-update {
+            text-align: center;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 10px;
+        }
+
+        /* --- Navigation Bar --- */
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -252,76 +299,60 @@
             text-shadow: 0 0 5px var(--neon-blue);
         }
 
-        .update-time {
-            text-align: center;
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            margin-top: 10px;
-        }
-
         @keyframes pulse {
             0% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.3); opacity: 0.4; }
             100% { transform: scale(1); opacity: 1; }
         }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .match-box-new {
+            animation: slideIn 0.5s ease-out;
+        }
     </style>
 </head>
 <body>
 
-    <!-- الهيدر المونديالي المضيء -->
+    <!-- الهيدر المونديالي -->
     <header>
         <h1>🏆 WORLD CUP 2026</h1>
-        <p>⚡ PREMIUM AUTOMATED HUB ⚡</p>
+        <p>⚡ PREMIUM AUTO-UPDATE HUB ⚡</p>
     </header>
-
-    <!-- 🎯 مساحة بنر إعلاني نيون احترافي ومباشر وفوري للأرباح والزيارات -->
-    <div style="max-width: 600px; margin: 15px auto; padding: 0 15px;">
-        <a href="https://ashraflx71.github.io/koora-gamers-hub/" target="_blank" style="text-decoration: none; display: block;">
-            <div style="background: linear-gradient(135deg, #121212 0%, #1a1a1a 100%); border: 2px solid var(--neon-blue); border-radius: 12px; padding: 15px; text-align: center; box-shadow: 0 0 15px rgba(0, 243, 255, 0.3); position: relative; overflow: hidden;">
-                <span style="position: absolute; top: 0; left: 0; background: var(--neon-blue); color: #000; font-size: 0.65rem; padding: 2px 8px; font-weight: bold; border-bottom-right-radius: 8px;">إعلان متميز</span>
-                
-                <h3 style="color: var(--gold-royal); font-size: 1.1rem; font-weight: 900; margin-bottom: 5px; text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);">🎮 اشحن حسابك والعب الآن!</h3>
-                <p style="color: #ffffff; font-size: 0.85rem; font-weight: 700;">انضم لبطولات Koora Gamers Hub واكتسح خصومك في المونديال الافتراضي</p>
-                
-                <div style="display: inline-block; margin-top: 10px; padding: 6px 15px; background: transparent; border: 1px solid var(--neon-green); color: var(--neon-green); border-radius: 6px; font-size: 0.8rem; font-weight: bold; text-shadow: 0 0 5px var(--neon-green);">
-                    اضغط هنا للتسجيل الفوري ⚡
-                </div>
-            </div>
-        </a>
-    </div>
 
     <div class="container">
 
-        <!-- 1. مركز المباريات المباشرة وتوقع النتيجة -->
+        <!-- 1. مركز المباريات المباشرة مع التحديث التلقائي -->
         <section id="live-section">
             <div class="section-title">⚽ مباريات كأس العالم المباشرة اليوم</div>
             
-            <!-- خادم جيتهاب الذكي سيقوم بحقن وتحديث المباريات داخل هذه المنطقة تلقائياً -->
-            <!-- DATA_START -->
-            <div class="match-box">
-                <div class="match-info">
-                    <div class="team-name">الأرجنتين 🇦🇷</div>
-                    <div class="live-score"> VS </div>
-                    <div class="team-name">إسبانيا 🇪🇸</div>
-                </div>
-                <div class="match-status">📅 في انتظار انطلاق البث المباشر للمباريات</div>
-                
-                <div class="predict-row">
-                    <span style="font-size: 0.85rem; color: var(--text-dim);">توقعك المباشر:</span>
-                    <div>
-                        <input type="number" class="predict-input" id="p1" placeholder="0">
-                        <span style="color:var(--gold-royal)">-</span>
-                        <input type="number" class="predict-input" id="p2" placeholder="0">
+            <!-- حالة التحديث -->
+            <div class="update-status" id="updateStatus">
+                <div class="status-indicator"></div>
+                <span id="statusText">جاهز للتحديث التلقائي الفوري...</span>
+            </div>
+
+            <!-- منطقة المباريات المباشرة -->
+            <div id="matchesContainer">
+                <!-- سيتم ملء هذا القسم تلقائياً بواسطة JavaScript -->
+                <div class="match-box">
+                    <div class="match-info">
+                        <div class="team-name">الأرجنتين 🇦🇷</div>
+                        <div class="live-score"> VS </div>
+                        <div class="team-name">إسبانيا 🇪🇸</div>
                     </div>
-                    <button class="btn-action" style="padding: 5px 12px; width: auto; font-size: 0.8rem;" onclick="checkPrediction()">تأكيد التوقع</button>
+                    <div class="match-status">📅 جاري التحميل...</div>
                 </div>
             </div>
-            <!-- DATA_END -->
 
-            <div class="update-time" id="lastUpdate">آخر تحديث تلقائي: <!-- TIME_PLACEHOLDER --> قيد الانتظار... <!-- TIME_PLACEHOLDER --></div>
+            <!-- معلومات آخر تحديث -->
+            <div class="last-update" id="lastUpdate">آخر تحديث تلقائي: الآن قيد التفعيل...</div>
         </section>
 
-        <!-- 2. مصنع محتوى الـ SEO المؤتمت للمقالات -->
+        <!-- 2. مصنع محتوى الـ SEO المؤتمت -->
         <section id="seo-section">
             <div class="section-title">✍️ مصنع مقالات المونديال (SEO Factory)</div>
             
@@ -337,31 +368,174 @@
 
             <button class="btn-action" onclick="generateWorldCupArticle()">⚡ توليد هيكل المقال الحصري فوريًا</button>
 
-            <!-- صندوق إخراج المقال الجاهز للنسخ -->
+            <!-- صندوق إخراج المقال -->
             <div class="output-box" id="articleOutput"></div>
         </section>
 
     </div>
 
-    <!-- بار التنقل السفلي للهواتف -->
+    <!-- شريط التنقل السفلي -->
     <div class="nav-bar">
         <a href="#live-section" class="nav-item active">📊 المباريات والتوقعات</a>
         <a href="#seo-section" class="nav-item">🔥 مصنع المحتوى الذكي</a>
     </div>
 
     <script>
-        // دالة محاكاة التوقعات
-        function checkPrediction() {
-            const p1 = document.getElementById('p1').value;
-            const p2 = document.getElementById('p2').value;
+        // ===== نظام التحديث التلقائي الذكي =====
+        
+        // بيانات المباريات (يمكن استبدالها بـ API حقيقي)
+        const matchesData = [
+            {
+                id: 1,
+                team1: "البرازيل",
+                flag1: "🇧🇷",
+                team2: "فرنسا",
+                flag2: "🇫🇷",
+                score1: 2,
+                score2: 1,
+                status: "الشوط الثاني - دقيقة 72'",
+                isLive: true,
+                updated: new Date()
+            },
+            {
+                id: 2,
+                team1: "الأرجنتين",
+                flag1: "🇦🇷",
+                team2: "إسبانيا",
+                flag2: "🇪🇸",
+                score1: 0,
+                score2: 0,
+                status: "الشوط الأول - دقيقة 35'",
+                isLive: true,
+                updated: new Date()
+            },
+            {
+                id: 3,
+                team1: "ألمانيا",
+                flag1: "🇩🇪",
+                team2: "إنجلترا",
+                flag2: "🇬🇧",
+                score1: 1,
+                score2: 1,
+                status: "انتهت المباراة - 90'",
+                isLive: false,
+                updated: new Date()
+            }
+        ];
+
+        // دالة عرض المباريات
+        function displayMatches() {
+            const container = document.getElementById('matchesContainer');
+            container.innerHTML = '';
+
+            matchesData.forEach((match, index) => {
+                const matchBox = document.createElement('div');
+                matchBox.className = 'match-box match-box-new' + (match.isLive ? ' active' : '');
+                
+                const liveIndicator = match.isLive ? '<div class="live-dot"></div>' : '';
+                
+                matchBox.innerHTML = `
+                    <div class="match-info">
+                        <div class="team-name">${match.team1} ${match.flag1}</div>
+                        <div class="live-score">${match.score1} - ${match.score2}</div>
+                        <div class="team-name">${match.team2} ${match.flag2}</div>
+                    </div>
+                    <div class="match-status">
+                        ${match.isLive ? liveIndicator : ''}
+                        ${match.status}
+                    </div>
+                    <div class="predict-row">
+                        <span style="font-size: 0.85rem; color: var(--text-dim);">توقعك المباشر:</span>
+                        <div>
+                            <input type="number" class="predict-input" placeholder="0" min="0">
+                            <span style="color:var(--gold-royal)">-</span>
+                            <input type="number" class="predict-input" placeholder="0" min="0">
+                        </div>
+                        <button class="btn-action" style="padding: 5px 12px; width: auto; font-size: 0.8rem;" onclick="checkPrediction(${match.id})">تأكيد التوقع</button>
+                    </div>
+                `;
+                
+                container.appendChild(matchBox);
+            });
+        }
+
+        // دالة تحديث آخر وقت تحديث
+        function updateLastUpdateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('ar-EG', { 
+                hour: '2-digit', 
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('lastUpdate').textContent = `آخر تحديث تلقائي: ${timeString}`;
+        }
+
+        // دالة محاكاة التحديث التلقائي
+        function autoUpdateMatches() {
+            const statusDiv = document.getElementById('updateStatus');
+            const statusText = document.getElementById('statusText');
+            
+            // إظهار حالة التحديث
+            statusDiv.classList.add('updating');
+            statusText.textContent = 'جاري التحديث التلقائي...';
+
+            // محاكاة تأخير الاتصال بـ API
+            setTimeout(() => {
+                // تحديث النتائج بشكل عشوائي لمحاكاة البث المباشر
+                matchesData.forEach(match => {
+                    if (match.isLive) {
+                        // تحديث الدقيقة
+                        const minutes = parseInt(match.status.match(/\d+/)[0]);
+                        if (minutes < 90) {
+                            const newMinutes = Math.min(minutes + Math.floor(Math.random() * 2), 90);
+                            match.status = match.status.replace(/\d+/, newMinutes);
+                        }
+                        
+                        // احتمال هدف جديد (نادر)
+                        if (Math.random() < 0.1) {
+                            match.score1 += Math.random() > 0.5 ? 1 : 0;
+                            match.score2 += Math.random() > 0.5 ? 1 : 0;
+                        }
+                    }
+                });
+
+                // عرض المباريات المحدثة
+                displayMatches();
+                updateLastUpdateTime();
+
+                // العودة لحالة الانتظار
+                statusDiv.classList.remove('updating');
+                statusText.textContent = '✅ تم التحديث بنجاح | التحديث القادم خلال ثواٍ...';
+
+                setTimeout(() => {
+                    if (statusText.textContent.includes('تم التحديث')) {
+                        statusText.textContent = 'جاهز للتحديث التلقائي الفوري...';
+                    }
+                }, 3000);
+            }, 1000);
+        }
+
+        // دالة التحقق من التوقعات
+        function checkPrediction(matchId) {
+            const p1Input = event.target.parentElement.querySelector('.predict-input:first-of-type');
+            const p2Input = event.target.parentElement.querySelector('.predict-input:last-of-type');
+            
+            const p1 = p1Input.value;
+            const p2 = p2Input.value;
+
             if(p1 === "" || p2 === "") {
                 alert("برجاء إدخال أرقام التوقع أولاً يا هندسة!");
                 return;
             }
-            alert(`🔥 تم تسجيل توقعك بنجاح [${p1} - ${p2}]! إذا صحت النتيجة ستحصل على 50 نقطة في لوحة الصدارة.`);
+
+            alert(`🔥 تم تسجيل توقعك بنجاح [${p1} - ${p2}]!\n\nإذا صحت النتيجة ستحصل على 50 نقطة في لوحة الصدارة.`);
+            
+            // مسح الحقول بعد التأكيد
+            p1Input.value = '';
+            p2Input.value = '';
         }
 
-        // دالة توليد مقالات المونديال المتوافقة مع الـ SEO لمنع الـ Low Value Content
+        // دالة توليد مقالات المونديال
         function generateWorldCupArticle() {
             const title = document.getElementById('matchTitle').value;
             const type = document.getElementById('articleType').value;
@@ -379,23 +553,36 @@
             
             let bodyText = "";
             if(type === "analysis") {
-                bodyText = `📋 الهيكل التحليلي الموصى به لجوجل:\n- مقدمة قوية تجذب القارئ في أول 3 ثوانٍ.\n- الفقرة الأولى: القراءة الفنية للمدربين ونقاط القوة والضعف.\n- الفقرة الثانية: مفاتيح اللعب الإستراتيجية التي حسمت اللقاء.\n- الخاتمة: السيناريوهات المتوقعة للمنتخبات في الدور القادم.`;
+                bodyText = `📋 الهيكل التحليلي الموصى به لجوجل:\n- مقدمة قوية تجذب القارئ في أول 3 ثوانٍ.\n- ��لفقرة الأولى: القراءة الفنية للمدربين ونقاط القوة والضعف.\n- الفقرة الثانية: مفاتيح اللعب الإستراتيجية التي حسمت اللقاء.\n- الخاتمة: السيناريوهات المتوقعة للمنتخبات في الدور القادم.`;
             } else if(type === "news") {
                 bodyText = `📰 التغطية الخبرية العاجلة:\n- رصد فوري لصافرة النهاية وأبرز اللقطات المثيرة للجدل.\n- تصريحات مدربي المنتخبات واللاعبين في المنطقة المختلطة.\n- تحديث فوري لجدول ترتيب المجموعة ونسب الصعود الحالية.`;
             } else {
                 bodyText = `🔮 تقرير التوقعات والذكاء الاصطناعي:\n- استعراض تاريخ المواجهات المباشرة بين الطرفين لتعزيز جودة المقال.\n- نسب الفوز بناءً على معطيات الأداء الحالية ونقاط القوة.\n- تصويت الجماهير وتوقعات خبراء الكورة الإلكترونية والواقعية.`;
             }
 
-            output.innerText = `✨ عنوان المقال المقترح لـ Google SEO:\n💥 ${title} اليوم | التحليل الشامل والترتيب المباشر في كأس العالم 2026\n\n━━━━━━━━━━━━━━━━━━━━\n\n${keywords}\n\n━━━━━━━━━━━━━━━━━━━━\n\n📌 المقدمة الحصرية:\n${intro}\n\n━━━━━━━━━━━━━━━━━━━━\n\n${bodyText}\n\n💪 نصيحة الخبير: انسخ هذا الهيكل، أضف طابعك التحليلي الخاص في دقيقتين، وانشره فورًا في مدونتك لتقفز لعناكب البحث في الصدارة!`;
+            output.innerText = `✨ عنوان المقال المقترح لـ Google SEO:\n💥 ${title} اليوم | التحليل الشامل والترتيب المباشر في كأس العالم 2026\n\n━━━━━━━━━━━━━━━━━━━━\n\n${keywords}\n\n━━━━━━━━━━━━━━━━━━━━\n\n📌 المقدمة الحصرية:\n${intro}\n\n━━━━━━━━━━━━━━━━━━━━\n\n${bodyText}\n\n💪 نصيحة الخبير: انسخ هذا الهيكل، أضف طابعك التحليلي الخاص في دقيقتين، وانشره فورًا ليقفز بك لعناكب البحث الصدارة!`;
         }
 
-        // تفعيل حركة التنقل السلس والتبديل البسيط
+        // تفعيل التنقل
         const navItems = document.querySelectorAll('.nav-item');
         navItems.forEach(item => {
             item.addEventListener('click', function() {
                 navItems.forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
             });
+        });
+
+        // ===== تهيئة التطبيق =====
+        document.addEventListener('DOMContentLoaded', function() {
+            // عرض المباريات الأولية
+            displayMatches();
+            updateLastUpdateTime();
+
+            // تحديث تلقائي كل 10 ثوانٍ
+            setInterval(autoUpdateMatches, 10000);
+
+            // تحديث أول مرة بعد 3 ثوانٍ
+            setTimeout(autoUpdateMatches, 3000);
         });
     </script>
 </body>
