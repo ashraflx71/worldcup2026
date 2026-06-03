@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <head>
-    <meta charset="UTF-8">
-    <meta name="monetag" content="2b3e4c60668e07d2b87f49515cd158d0">
-    <!-- باقي الأكواد والأنماط الخاصة بك -->
-    </head>
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="monetag" content="2b3e4c60668e07d2b87f49515cd158d0">
     <title>World Cup 2026 | AI Premium Hub</title>
     
     <!-- Meta للـ PWA والسيو -->
@@ -258,32 +253,6 @@
             animation: pulse 1.2s infinite;
         }
 
-        /* --- محرك التوقعات --- */
-        .predict-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .predict-input {
-            width: 50px;
-            padding: 8px;
-            background: #000;
-            border: 1px solid #444;
-            border-radius: 6px;
-            color: #fff;
-            text-align: center;
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-
-        .predict-input:focus {
-            border-color: var(--neon-blue);
-            outline: none;
-        }
-
         /* --- مصنع محتوى السيو --- */
         .form-label {
             font-size: 0.85rem;
@@ -490,14 +459,7 @@
 
             <!-- منطقة المباريات المباشرة -->
             <div id="matchesContainer">
-                <div class="match-box">
-                    <div class="match-info">
-                        <div class="team-name">الأرجنتين 🇦🇷</div>
-                        <div class="live-score"> VS </div>
-                        <div class="team-name">إسبانيا 🇪🇸</div>
-                    </div>
-                    <div class="match-status">📅 جاري التحميل...</div>
-                </div>
+                <!-- المربعات تضاف ديناميكياً عبر السكريبت -->
             </div>
 
             <!-- معلومات آخر تحديث -->
@@ -520,7 +482,7 @@
 
             <button class="btn-action" onclick="generateWorldCupArticle()">⚡ توليد هيكل المقال الحصري فوريًا</button>
 
-            <!-- صندوق إخراج ا��مقال -->
+            <!-- صندوق إخراج المقال -->
             <div class="output-box" id="articleOutput"></div>
         </section>
 
@@ -562,64 +524,49 @@
                 icon: '📱',
                 quality: '1080p',
                 status: '✅ متاح'
-            },
-            {
-                id: 4,
-                name: '🎥 ESPN+',
-                type: 'embed',
-                url: 'https://www.espn.com/watch/',
-                icon: '🏈',
-                quality: '4K',
-                status: '⏳ قريباً'
             }
         ];
 
-        // ===== بيانات المباريات =====
+        // ===== بيانات المباريات المباشرة =====
         const matchesData = [
             {
                 id: 1,
-                team1: "البرازيل",
-                flag1: "🇧🇷",
-                team2: "فرنسا",
-                flag2: "🇫🇷",
-                score1: 2,
-                score2: 1,
-                status: "الشوط الثاني - دقيقة 72'",
-                isLive: true,
-                updated: new Date()
+                team1: "البرازيل", flag1: "🇧🇷",
+                team2: "فرنسا", flag2: "🇫🇷",
+                score1: 2, score2: 1,
+                status: "الشوط الثاني - دقيقة 72'", isLive: true
             },
             {
                 id: 2,
-                team1: "الأرجنتين",
-                flag1: "🇦🇷",
-                team2: "إسبانيا",
-                flag2: "🇪🇸",
-                score1: 0,
-                score2: 0,
-                status: "الشوط الأول - دقيقة 35'",
-                isLive: true,
-                updated: new Date()
+                team1: "الأرجنتين", flag1: "🇦🇷",
+                team2: "إسبانيا", flag2: "🇪🇸",
+                score1: 0, score2: 0,
+                status: "الشوط الأول - دقيقة 35'", isLive: true
             },
             {
                 id: 3,
-                team1: "ألمانيا",
-                flag1: "🇩🇪",
-                team2: "إنجلترا",
-                flag2: "🇬🇧",
-                score1: 1,
-                score2: 1,
-                status: "انتهت المباراة - 90'",
-                isLive: false,
-                updated: new Date()
+                team1: "ألمانيا", flag1: "🇩🇪",
+                team2: "إنجلترا", flag2: "🇬🇧",
+                score1: 1, score2: 1,
+                status: "انتهت المباراة - 90'", isLive: false
             }
         ];
 
-        // ===== دالة تحميل البث المباشر =====
+        // ===== دالة تشغيل وعرض المصادر المباشرة =====
+        function displayStreams() {
+            const list = document.getElementById('streamsList');
+            list.innerHTML = streams.map(s => `
+                <div class="stream-item" data-stream-id="${s.id}" onclick="loadStream(${s.id})">
+                    <div>${s.icon} ${s.name}</div>
+                    <div class="stream-status">${s.status}</div>
+                </div>
+            `).join('');
+        }
+
         function loadStream(streamId) {
             const stream = streams.find(s => s.id === streamId);
             if (!stream) return;
 
-            const videoPlayer = document.getElementById('videoPlayer');
             const videoTitle = document.getElementById('videoTitle');
             const qualityBadge = document.getElementById('qualityBadge');
             const liveBadge = document.getElementById('liveBadge');
@@ -628,214 +575,39 @@
             videoTitle.textContent = `${stream.icon} ${stream.name} - كأس العالم 2026`;
             qualityBadge.textContent = stream.quality;
 
-            // تحديث الـ streamsList 
             document.querySelectorAll('.stream-item').forEach(item => {
                 item.classList.remove('active');
             });
-            document.querySelector(`[data-stream-id="${streamId}"]`).classList.add('active');
+            const selectedItem = document.querySelector(`[data-stream-id="${streamId}"]`);
+            if (selectedItem) selectedItem.classList.add('active');
 
-            // حسب نوع البث
-            if (stream.type === 'youtube') {
-                videoContainer.innerHTML = `<iframe width="100%" height="100%" src="${stream.url}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                liveBadge.style.display = 'flex';
-            } 
-            else if (stream.type === 'hls') {
-                videoPlayer.src = '';
-                if (typeof Hls !== 'undefined' && Hls.isSupported()) {
-                    const hls = new Hls();
-                    hls.loadSource(stream.url);
-                    hls.attachMedia(videoPlayer);
-                }
-                liveBadge.style.display = 'flex';
-            }
-            else if (stream.type === 'video') {
-                videoContainer.innerHTML = `<video controls style="width: 100%; height: 100%; object-fit: contain;"><source src="${stream.url}" type="video/mp4"></video>`;
-                liveBadge.style.display = 'flex';
-            }
-            else if (stream.type === 'embed') {
-                videoContainer.innerHTML = `<iframe width="100%" height="100%" src="${stream.url}" frameborder="0" allowfullscreen allow="autoplay"></iframe>`;
-                liveBadge.style.display = 'flex';
-            }
+            videoContainer.innerHTML = `<iframe width="100%" height="100%" src="${stream.url}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+            liveBadge.style.display = 'flex';
         }
 
-        // ===== دالة إنشاء قائمة البثوث =====
-        function displayStreams() {
-            const streamsList = document.getElementById('streamsList');
-            streamsList.innerHTML = '';
-
-            streams.forEach(stream => {
-                const streamItem = document.createElement('div');
-                streamItem.className = 'stream-item' + (stream.id === 1 ? ' active' : '');
-                streamItem.setAttribute('data-stream-id', stream.id);
-                streamItem.innerHTML = `
-                    <div>${stream.icon} ${stream.name}</div>
-                    <div class="stream-status">${stream.status}</div>
-                `;
-                streamItem.onclick = () => loadStream(stream.id);
-                streamsList.appendChild(streamItem);
-            });
-
-            // تحميل البث الأول افتراضياً
-            loadStream(1);
-        }
-
-        // ===== دالة عرض المباريات =====
+        // ===== دالة بناء المباريات المباشرة تلقائياً =====
         function displayMatches() {
             const container = document.getElementById('matchesContainer');
-            container.innerHTML = '';
-
-            matchesData.forEach((match) => {
-                const matchBox = document.createElement('div');
-                matchBox.className = 'match-box match-box-new' + (match.isLive ? ' active' : '');
-                
-                const liveIndicator = match.isLive ? '<div class="live-dot"></div>' : '';
-                
-                matchBox.innerHTML = `
+            container.innerHTML = matchesData.map(m => `
+                <div class="match-box ${m.isLive ? 'active' : ''}">
                     <div class="match-info">
-                        <div class="team-name">${match.team1} ${match.flag1}</div>
-                        <div class="live-score">${match.score1} - ${match.score2}</div>
-                        <div class="team-name">${match.team2} ${match.flag2}</div>
+                        <div class="team-name">${m.team1} ${m.flag1}</div>
+                        <div class="live-score">${m.isLive ? `${m.score1} - ${m.score2}` : 'VS'}</div>
+                        <div class="team-name">${m.flag2} ${m.team2}</div>
                     </div>
                     <div class="match-status">
-                        ${match.isLive ? liveIndicator : ''}
-                        ${match.status}
+                        ${m.isLive ? '<div class="live-dot"></div>' : ''} ${m.status}
                     </div>
-                    <div class="predict-row">
-                        <span style="font-size: 0.85rem; color: var(--text-dim);">توقعك المباشر:</span>
-                        <div>
-                            <input type="number" class="predict-input" placeholder="0" min="0">
-                            <span style="color:var(--gold-royal)">-</span>
-                            <input type="number" class="predict-input" placeholder="0" min="0">
-                        </div>
-                        <button class="btn-action" style="padding: 5px 12px; width: auto; font-size: 0.8rem;" onclick="checkPrediction(${match.id})">تأكيد التوقع</button>
-                    </div>
-                `;
-                
-                container.appendChild(matchBox);
-            });
+                </div>
+            `).join('');
+            document.getElementById('lastUpdate').textContent = `آخر تحديث تلقائي: ${new Date().toLocaleTimeString('ar-EG')}`;
         }
 
-        // ===== دالة تحديث آخر وقت تحديث =====
-        function updateLastUpdateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('ar-EG', { 
-                hour: '2-digit', 
-                minute: '2-digit',
-                second: '2-digit'
-            });
-            document.getElementById('lastUpdate').textContent = `آخر تحديث تلقائي: ${timeString}`;
-        }
-
-        // ===== دالة التحديث التلقائي =====
-        function autoUpdateMatches() {
-            const statusDiv = document.getElementById('updateStatus');
-            const statusText = document.getElementById('statusText');
-            
-            statusDiv.classList.add('updating');
-            statusText.textContent = 'جاري التحديث التلقائي...';
-
-            setTimeout(() => {
-                matchesData.forEach(match => {
-                    if (match.isLive) {
-                        const minutes = parseInt(match.status.match(/\d+/)[0]);
-                        if (minutes < 90) {
-                            const newMinutes = Math.min(minutes + Math.floor(Math.random() * 2), 90);
-                            match.status = match.status.replace(/\d+/, newMinutes);
-                        }
-                        
-                        if (Math.random() < 0.1) {
-                            match.score1 += Math.random() > 0.5 ? 1 : 0;
-                            match.score2 += Math.random() > 0.5 ? 1 : 0;
-                        }
-                    }
-                });
-
-                displayMatches();
-                updateLastUpdateTime();
-
-                statusDiv.classList.remove('updating');
-                statusText.textContent = '✅ تم التحديث بنجاح | التحديث القادم خلال ثواٍ...';
-
-                setTimeout(() => {
-                    if (statusText.textContent.includes('تم التحديث')) {
-                        statusText.textContent = 'جاهز للتحديث التلقائي الفوري...';
-                    }
-                }, 3000);
-            }, 1000);
-        }
-
-        // ===== دالة التحقق من التوقعات =====
-        function checkPrediction(matchId) {
-            const p1Input = event.target.parentElement.querySelector('.predict-input:first-of-type');
-            const p2Input = event.target.parentElement.querySelector('.predict-input:last-of-type');
-            
-            const p1 = p1Input.value;
-            const p2 = p2Input.value;
-
-            if(p1 === "" || p2 === "") {
-                alert("برجاء إدخال أرقام التوقع أولاً يا هندسة!");
-                return;
-            }
-
-            alert(`🔥 تم تسجيل توقعك بنجاح [${p1} - ${p2}]!\n\nإذا صحت النتيجة ستحصل على 50 نقطة في لوحة الصدارة.`);
-            
-            p1Input.value = '';
-            p2Input.value = '';
-        }
-
-        // ===== دالة توليد المقالات =====
+        // ===== دالة توليد مقالات السيو الفورية للمونديال =====
         function generateWorldCupArticle() {
-            const title = document.getElementById('matchTitle').value;
+            const title = document.getElementById('matchTitle').value.trim() || "قمة كأس العالم 2026";
             const type = document.getElementById('articleType').value;
             const output = document.getElementById('articleOutput');
 
-            if(!title) {
-                alert("برجاء كتابة عنوان أو اسم المباراة أولاً!");
-                return;
-            }
-
-            output.style.display = "block";
-            
-            let intro = `شهدت الساحات الرياضية العالمية اهتمامًا ضخمًا بـ طيات مواجهة (${title}) في نهائيات كأس العالم 2026، حيث يبحث الملايين من عشاق كرة القدم عن تفاصيل هذا اللقاء الناري.`;
-            let keywords = `الكلمات المفتاحية المستهدفة: كأس العالم 2026، بث مباشر ${title}، تحليل مباراة ${title}، ترتيب مجموعات كأس العالم.`;
-            
-            let bodyText = "";
-            if(type === "analysis") {
-                bodyText = `📋 الهيكل التحليلي الموصى به لجوجل:\n- مقدمة قوية تجذب القارئ في أول 3 ثوانٍ.\n- الفقرة الأولى: القراءة الفنية للمدربين ونقاط القوة والضعف.\n- الفقرة الثانية: مفاتيح اللعب الإستراتيجية التي حسمت اللقاء.\n- الخاتمة: السيناريوهات المتوقعة للمنتخبات في الدور القادم.`;
-            } else if(type === "news") {
-                bodyText = `📰 التغطية الخبرية العاجلة:\n- رصد فوري لصافرة النهاية وأبرز اللقطات المثيرة للجدل.\n- تصريحات مدربي المنتخبات واللاعبين في المنطقة المختلطة.\n- تحديث فوري لجدول ترتيب المجموعة ونسب الصعود الحالية.`;
-            } else {
-                bodyText = `🔮 تقرير التوقعات والذكاء الاصطناعي:\n- استعراض تاريخ المواجهات المباشرة بين الطرفين لتعزيز جودة المقال.\n- نسب الفوز بناءً على معطيات الأداء الحالية ونقاط القوة.\n- تصويت الجماهير وتوقعات خبراء الكورة الإلكترونية والواقعية.`;
-            }
-
-            output.innerText = `✨ عنوان المقال المقترح لـ Google SEO:\n💥 ${title} اليوم | التحليل الشامل والترتيب المباشر في كأس العالم 2026\n\n━━━━━━━━━━━━━━━━━━━━\n\n${keywords}\n\n━━━━━━━━━━━━━━━━━━━━\n\n📌 المقدمة الحصرية:\n${intro}\n\n━━━━━━━━━━━━━━━━━━━━\n\n${bodyText}\n\n💪 نصيحة الخبير: انسخ هذا الهيكل، أضف طابعك التحليلي الخاص في دقيقتين، وانشره فورًا لتقفز لعناكب البحث الصدارة!`;
-        }
-
-        // ===== تفعيل التنقل =====
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(item => {
-            item.addEventListener('click', function() {
-                navItems.forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        // ===== تهيئة التطبيق =====
-        document.addEventListener('DOMContentLoaded', function() {
-            displayStreams();
-            displayMatches();
-            updateLastUpdateTime();
-
-            setInterval(autoUpdateMatches, 10000);
-            setTimeout(autoUpdateMatches, 3000);
-
-            // تحديث عدد المشاهدين كل 5 ثوانٍ
-            setInterval(() => {
-                const viewerCount = document.getElementById('viewerCount');
-                const random = Math.floor(Math.random() * 500000) + 2000000;
-                viewerCount.textContent = random.toLocaleString('ar-EG');
-            }, 5000);
-        });
-    </script>
-</body>
-</html>
+            let content = `📌 العنوان المقترح للسيو (H1):\nمشاهدة مباراة ${title} بث مباشر | كس العالم 2026 وقنوات العرض الحصري\n\n`;
+            content += `✍️ المقدمة (المتوافقة مع خوارزميات جوجل):\nتبحث جماهير الساحرة المستديرة حول العالم 
