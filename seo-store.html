@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجر محتوى SEO المونديالي | بيع مقالات احترافية</title>
+    
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="description" content="متجر محتوى SEO احترافي - مقالات مونديالية جاهزة، قوالب متقدمة، وخدمات كتابة مخصصة للمدونين ووكالات التسويق.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-deep: #050505;
+            --bg-card: #111111;
+            --neon-green: #39ff14;
+            --neon-blue: #00f3ff;
+            --gold-royal: #ffd700;
+            --text-main: #ffffff;
+            --text-dim: #999999;
+            --success: #00ff00;
+            --warning: #ff6600;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            padding-bottom: 80px;
+            overflow-x: hidden;
+        }
+
+        /* === HEADER === */
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 25px 15px;
+            text-align: center;
+            border-bottom: 3px solid var(--neon-green);
+            box-shadow: 0 8px 30px rgba(57, 255, 20, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--neon-green);
+            text-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
+            margin-bottom: 5px;
+        }
+
+        header p {
+            font-size: 0.9rem;
+            color: var(--neon-blue);
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        /* === PRICING CARDS === */
+        .pricing-grid {
+            display: grid;
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .pricing-card {
+            background: var(--bg-card);
+            border: 2px solid #222;
+            border-radius: 16px;
+            padding: 25px;
+            position: relative;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .pricing-card:hover {
+            border-color: var(--neon-green);
+            box-shadow: 0 8px 25px rgba(57, 255, 20, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .pricing-card.featured {
+            border-color: var(--gold-royal);
+            background: linear-gradient(135deg, #1a1a1a 0%, #222222 100%);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .badge {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background: var(--gold-royal);
+            color: #000;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 900;
+            font-size: 0.85rem;
+        }
+
+        .price-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--neon-blue);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .price-amount {
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--gold-royal);
+            margin: 15px 0;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .price-description {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 15px 0;
+            font-size: 0.9rem;
+        }
+
+        .features-list li {
+            padding: 8px 0;
+            border-bottom: 1px solid #1a1a1a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-dim);
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .features-list li:before {
+            content: "✓";
+            color: var(--neon-green);
+            font-weight: 900;
+            font-size: 1.2rem;
+        }
+
+        .btn-buy {
+            width: 100%;
+            padding: 14px;
+            background: transparent;
+            border: 2px solid var(--neon-green);
+            color: var(--neon-green);
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-buy:hover {
+            background: var(--neon-green);
+            color: #000;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+            transform: scale(1.05);
+        }
+
+        .btn-buy:active {
+            transform: scale(0.98);
+        }
+
+        /* === SECTION TITLES === */
+        .section-header {
+            text-align: center;
+            margin: 35px 0 25px 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--neon-green);
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            color: var(--gold-royal);
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+        }
+
+        .section-header p {
+            font-size: 0.9rem;
+            color: var(--text-dim);
+        }
+
+        /* === SAMPLE ARTICLES === */
+        .sample-box {
+            background: #0a0a0a;
+            border: 1px dashed var(--neon-blue);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            max-height: 200px;
+            overflow-y: auto;
+            line-height: 1.6;
+        }
+
+        .sample-box strong {
+            color: var(--neon-green);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* === TESTIMONIALS === */
+        .testimonial {
+            background: var(--bg-card);
+            border-right: 4px solid var(--neon-green);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .testimonial-author {
+            color: var(--gold-royal);
+            font-weight: 700;
+            margin-top: 10px;
+        }
+
+        /* === FAQ === */
+        .faq-item {
+            background: var(--bg-card);
+            border: 1px solid #222;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 15px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #161616;
+            font-weight: 700;
+            color: var(--neon-blue);
+            transition: all 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #1a1a1a;
+            color: var(--neon-green);
+        }
+
+        .faq-answer {
+            padding: 15px;
+            display: none;
+            color: var(--text-dim);
+            border-top: 1px solid #222;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-toggle {
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+
+        /* === CONTACT FORM === */
+        .contact-form {
+            background: var(--bg-card);
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+            font-weight: 700;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 0.95rem;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            border-color: var(--neon-green);
+            outline: none;
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: var(--neon-green);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+
+        .btn-submit:hover {
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.5);
+            transform: scale(1.02);
+        }
+
+        /* === STATS === */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .stat-box {
+            background: var(--bg-card);
+            border: 1px solid #222;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--neon-green);
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-top: 5px;
+        }
+
+        /* === NAVBAR === */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #111;
+            border-top: 2px solid var(--neon-green);
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            text-decoration: none;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-item.active {
+            color: var(--neon-green);
+            text-shadow: 0 0 8px var(--neon-green);
+        }
+
+        /* === ANIMATIONS === */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .pricing-card {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .badge {
+            animation: pulse 2s infinite;
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.4rem;
+            }
+
+            .price-amount {
+                font-size: 1.8rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <h1>🚀 متجر محتوى SEO المونديالي</h1>
+        <p>مقالات احترافية جاهزة للنسخ والنشر | قوالب متقدمة | كتابة مخصصة</p>
+    </header>
+
+    <div class="container">
+
+        <!-- STATISTICS -->
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-number">2,500+</div>
+                <div class="stat-label">مقالة مباعة</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">4.8★</div>
+                <div class="stat-label">تقييم العملاء</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">نسبة رضا</div>
+            </div>
+        </div>
+
+        <!-- PRICING SECTION -->
+        <div class="section-header">
+            <h2>🏷️ خطط الأسعار</h2>
+            <p>اختر الباقة المناسبة لاحتياجاتك</p>
+        </div>
+
+        <div class="pricing-grid">
+
+            <!-- PLAN 1: Single Article -->
+            <div class="pricing-card">
+                <div class="price-title">📝 مقالة واحدة</div>
+                <div class="price-amount">$15</div>
+                <div class="price-description">مقالة SEO محسّنة كاملة جاهزة للنشر</div>
+                <ul class="features-list">
+                    <li>1,500-2,000 كلمة احترافية</li>
+                    <li>تحسين SEO متقدم</li>
+                    <li>صور مقترحة + روابط داخلية</li>
+                    <li>تسليم خلال 24 ساعة</li>
+                    <li>تعديل مجاني واحد</li>
+                </ul>
+                <button class="btn-buy" onclick="orderArticle(1, 15)">اطلب الآن</button>
+            </div>
+
+            <!-- PLAN 2: 10 Articles Bundle -->
+            <div class="pricing-card">
+                <div class="price-title">📦 عشر مقالات</div>
+                <div class="price-amount">$120</div>
+                <div class="price-description">$12 لكل مقالة (توفير 20%)</div>
+                <ul class="features-list">
+                    <li>10 مقالات متنوعة</li>
+                    <li>جودة SEO عالية جداً</li>
+                    <li>أولويات عالية في التسليم</li>
+                    <li>تعديلات مجانية غير محدودة</li>
+                    <li>استشارة SEO مجانية</li>
+                </ul>
+                <button class="btn-buy" onclick="orderArticle(10, 120)">اطلب الآن</button>
+            </div>
+
+            <!-- PLAN 3: Premium Bundle -->
+            <div class="pricing-card featured">
+                <div class="badge">⭐ الأفضل</div>
+                <div class="price-title">💎 مئة مقالة</div>
+                <div class="price-amount">$650</div>
+                <div class="price-description">$6.5 لكل مقالة (توفير 56%)</div>
+                <ul class="features-list">
+                    <li>100 مقالة متخصصة</li>
+                    <li>جودة SEO احترافية جداً</li>
+                    <li>أولويات قصوى في التسليم</li>
+                    <li>تعديلات غير محدودة</li>
+                    <li>استشارة شاملة لاستراتيجية المحتوى</li>
+                    <li>دعم أولويات 24/7</li>
+                </ul>
+                <button class="btn-buy" onclick="orderArticle(100, 650)">اطلب الآن</button>
+            </div>
+
+            <!-- PLAN 4: Monthly Subscription -->
+            <div class="pricing-card">
+                <div class="price-title">♾️ اشتراك شهري</div>
+                <div class="price-amount">$99</div>
+                <div class="price-description">مقالات غير محدودة كل شهر</div>
+                <ul class="features-list">
+                    <li>مقالات غير محدودة</li>
+                    <li>جودة احترافية عالية</li>
+                    <li>مدير حساب مخصص</li>
+                    <li>تعديلات غير محدودة</li>
+                    <li>أدوات SEO متقدمة مجاناً</li>
+                    <li>دعم فني أولوية</li>
+                </ul>
+                <button class="btn-buy" onclick="orderArticle(0, 99)">اشترك الآن</button>
+            </div>
+
+            <!-- PLAN 5: Custom Writing -->
+            <div class="pricing-card">
+                <div class="price-title">✍️ كتابة مخصصة</div>
+                <div class="price-amount">حسب الطلب</div>
+                <div class="price-description">محتوى حسب متطلبات مشروعك</div>
+                <ul class="features-list">
+                    <li>تحليل احتياجات شامل</li>
+                    <li>محتوى مخصص 100%</li>
+                    <li>أبحاث متقدمة وعميقة</li>
+                    <li>تصميم SEO متطور</li>
+                    <li>تعديلات غير محدودة</li>
+                </ul>
+                <button class="btn-buy" onclick="contactCustom()">طلب عرض سعر</button>
+            </div>
+
+        </div>
+
+        <!-- SAMPLE ARTICLES -->
+        <div class="section-header">
+            <h2>📄 عينات من المقالات</h2>
+            <p>هذه أمثلة على جودة محتوانا</p>
+        </div>
+
+        <div class="sample-box">
+            <strong>📋 مثال 1: "تحليل شامل لأداء منتخب البرازيل في كأس العالم 2026"</strong>
+            تشهد منتخبات أمريكا الجنوبية حراكاً تنافسياً لا مثيل له في نسخة 2026 من كأس العالم. يركز هذا التحليل على استراتيجيات المنتخب البرازيلي، نقاط القوة في خط الدفاع، وقدرة لاعبي الوسط على السيطرة على الكرة. بناءً على إحصائيات البطولات السابقة وأداء اللاعبين الحاليين، نتوقع...
+        </div>
+
+        <div class="sample-box">
+            <strong>🔥 مثال 2: "التنبؤات الساخنة: من يفوز بكأس العالم؟"</strong>
+            مع الاقتراب من بطولة 2026، يزداد البحث حول فرص المنتخبات الفائزة. تشير التحليلات الإحصائية إلى أن المنتخبات الأوروبية تحتفظ بأفضلية تاريخية، لكن صعود المواهب الجديدة من أمريكا الجنوبية يشكل تهديداً حقيقياً. هذا المقال يقدم توقعات بناءً على...
+        </div>
+
+        <!-- TESTIMONIALS -->
+        <div class="section-header">
+            <h2>⭐ آراء العملاء</h2>
+            <p>ما يقوله عملاؤنا الراضون</p>
+        </div>
+
+        <div class="testimonial">
+            <p>"استخدمت المقالات في مدونتي وحققت ترتيب رقم 1 في جوجل خلال 3 أشهر فقط! جودة عالية جداً وSEO احترافي."</p>
+            <div class="testimonial-author">أحمد السويلم - مدون رياضي</div>
+        </div>
+
+        <div class="testimonial">
+            <p>"المقالات وفّرت لنا وقتاً وتكاليف الكتابة. توقفنا عن التعاقد مع 3 كتاب متخصصين وبقينا مع هذا المتجر فقط!"</p>
+            <div class="testimonial-author">وكالة تسويق - KSA Media</div>
+        </div>
+
+        <div class="testimonial">
+            <p>"الكتابة المخصصة ساعدتنا في بناء محتوى فريد يعكس هويتنا. التواصل ممتاز والاحترافية عالية جداً."</p>
+            <div class="testimonial-author">موقع أخبار رياضية - Sports Daily</div>
+        </div>
+
+        <!-- FREQUENTLY ASKED QUESTIONS -->
+        <div class="section-header">
+            <h2>❓ الأسئلة الشائعة</h2>
+            <p>إجابات على استفساراتك المتكررة</p>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>هل المقالات أصلية 100%؟</span>
+                <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">نعم! جميع المقالات مكتوبة أصلياً من الصفر بدون أي نسخ. نستخدم تقنيات AI متقدمة لضمان الفرادة وتحسين SEO بشكل احترافي. كل مقالة تمر بفحص Copyscape ويتم توثيقها.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>كم يستغرق وقت التسليم؟</span>
+                <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">المقالة الواحدة: 24 ساعة. باقات 10 مقالات: 3-5 أيام. باقة 100 مقالة: 15-20 يوماً. الاشتراك الشهري: تسليم فوري عند الطلب. يمكن تسريع التسليم برسوم إضافية.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>هل يمكن طلب تعديلات بعد الاستلام؟</span>
+                <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">نعم! خطة المقالة الواحدة تشمل تعديل مجاني واحد. باقات أكبر وتعديلات غير محدودة. نحن نعمل حتى تكون المقالة مطابقة تماماً لرغباتك.</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>هل المقالات محسّنة للـ SEO؟</span>
+                <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">بالتأكيد! كل مقالة تتضمن:
+                • استهداف كلمات مفتاحية محددة
+                • تحسين Meta Tags والوصف
+                • هيكلية رؤوس عناوين احترافية
+                • روابط داخلية وخارجية ذكية
+                • سرعة تحميل محسّنة
+                • توافق مع Core Web Vitals</div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>ما هي طرق الدفع المتاحة؟</span>
+                <span class="faq-toggle">▼</span>
+            </div>
+            <div class="faq-answer">نقبل:
+                • بطاقات ائتمان (Visa, Mastercard)
+                • PayPal
+                • Stripe
+                • تحويل بنكي
+                • العملات الرقمية (Bitcoin, Ethereum)
+                • أمان كامل على جميع المعاملات</div>
+        </div>
+
+        <!-- CONTACT FORM -->
+        <div class="section-header">
+            <h2>📧 اتصل بنا</h2>
+            <p>لديك استفسار؟ نحن هنا للمساعدة</p>
+        </div>
+
+        <div class="contact-form">
+            <form onsubmit="submitContact(event)">
+                <div class="form-group">
+                    <label class="form-label">الاسم الكامل</label>
+                    <input type="text" class="form-input" id="contactName" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">البريد الإلكتروني</label>
+                    <input type="email" class="form-input" id="contactEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">رقم الهاتف (اختياري)</label>
+                    <input type="tel" class="form-input" id="contactPhone">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">نوع الخدمة</label>
+                    <select class="form-input" id="serviceType">
+                        <option value="inquiry">استفسار عام</option>
+                        <option value="bulk">طلب كميات كبيرة</option>
+                        <option value="custom">كتابة مخصصة</option>
+                        <option value="subscription">اشتراك شهري</option>
+                        <option value="partnership">شراكة تجارية</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">الرسالة</label>
+                    <textarea class="form-textarea" id="contactMessage" required></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">📤 أرسل الرسالة</button>
+            </form>
+        </div>
+
+    </div>
+
+    <!-- NAVIGATION BAR -->
+    <div class="nav-bar">
+        <a href="#" class="nav-item active" onclick="scrollToSection('pricing')">💰 الأسعار</a>
+        <a href="#" class="nav-item" onclick="scrollToSection('samples')">📄 العينات</a>
+        <a href="#" class="nav-item" onclick="scrollToSection('contact')">📧 تواصل معنا</a>
+        <a href="#" class="nav-item" onclick="showCart()">🛒 السلة (0)</a>
+    </div>
+
+    <script>
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                this.parentElement.classList.toggle('active');
+            });
+        });
+
+        // Order Article Function
+        function orderArticle(quantity, price) {
+            let message = `
+            🛒 طلب جديد
+            ──────────────────
+            الكمية: ${quantity > 0 ? quantity + ' مقالة' : 'اشتراك شهري'}
+            السعر: $${price}
+            ──────────────────
+            سيتم تحويلك الآن إلى صفحة الدفع الآمنة.
+            `;
+            alert(message);
+            // في الواقع، هنا سيتم الانتقال إلى بوابة الدفع
+            // window.location.href = 'https://payment-gateway.com/checkout?price=' + price;
+        }
+
+        // Contact Custom
+        function contactCustom() {
+            alert('🎯 سيتم التواصل معك قريباً لمناقشة احتياجات مشروعك والعرض السعري المناسب!');
+            document.getElementById('serviceType').value = 'custom';
+            scrollToElement(document.querySelector('.contact-form'));
+        }
+
+        // Submit Contact Form
+        function submitContact(event) {
+            event.preventDefault();
+            const name = document.getElementById('contactName').value;
+            const email = document.getElementById('contactEmail').value;
+            alert(`✅ شكراً ${name}! تم استقبال رسالتك. سنرد عليك قريباً على ${email}`);
+            event.target.reset();
+        }
+
+        // Scroll to Section
+        function scrollToSection(sectionName) {
+            // Animation scroll to section
+            window.scrollTo({ behavior: 'smooth', top: 0 });
+        }
+
+        // Scroll to Element
+        function scrollToElement(element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Show Cart
+        function showCart() {
+            alert('🛒 سلتك فارغة حالياً. اختر الخدمة المطلوبة لإضافتها!');
+        }
+
+        // Navigation Bar Active State
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+
+</body>
+</html>
