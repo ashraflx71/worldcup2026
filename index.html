@@ -2,175 +2,27 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>كأس العالم 2026 - نتائج حية</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: linear-gradient(135deg, #0a0f1e 0%, #0a1a2e 100%);
-            font-family: 'Tajawal', system-ui, -apple-system, sans-serif;
-            color: white;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .header {
-            text-align: center;
-            padding: 30px 20px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 40px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .header h1 {
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #fff, #ffd700);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 10px;
-        }
-        .badge {
-            display: inline-block;
-            background: #ff3b30;
-            padding: 6px 15px;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        .status {
-            text-align: center;
-            background: rgba(0,200,0,0.2);
-            padding: 12px;
-            border-radius: 60px;
-            margin-bottom: 25px;
-            font-size: 0.9rem;
-            border-right: 4px solid #00ff88;
-        }
-        .matches-container {
-            background: rgba(0,0,0,0.3);
-            border-radius: 28px;
-            padding: 20px;
-            backdrop-filter: blur(5px);
-            margin-bottom: 30px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        /* أنماط المباريات */
-        .match-box {
-            background: rgba(0,0,0,0.5);
-            border-radius: 16px;
-            padding: 15px;
-            margin: 15px 0;
-            border: 1px solid rgba(57,255,20,0.3);
-            transition: transform 0.2s;
-        }
-        .match-box:hover {
-            transform: translateX(-5px);
-        }
-        .match-box.live-status { 
-            border-right: 4px solid #39ff14;
-            background: rgba(57,255,20,0.05);
-        }
-        .match-box.final-status { opacity: 0.8; }
-        .match-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 0.8rem;
-        }
-        .match-time { color: #ffd700; }
-        .match-status-badge {
-            padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: bold;
-        }
-        .match-status-badge.live-status { background: #39ff14; color: #000; }
-        .match-status-badge.final-status { background: #666; color: #fff; }
-        .match-status-badge.upcoming-status { background: #ff9800; color: #000; }
-        .match-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .team {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex: 1;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: linear-gradient(135deg, #0a0f1e, #0a1a2e); font-family: 'Tajawal', system-ui, sans-serif; color: white; padding: 20px; min-height: 100vh; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; padding: 30px; background: rgba(255,255,255,0.05); border-radius: 40px; margin-bottom: 30px; }
+        .header h1 { font-size: 2rem; background: linear-gradient(135deg, #fff, #ffd700); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .badge { display: inline-block; background: #ff3b30; padding: 6px 15px; border-radius: 40px; font-size: 0.8rem; margin-top: 10px; }
+        .status { text-align: center; background: rgba(0,200,0,0.2); padding: 12px; border-radius: 60px; margin-bottom: 25px; }
+        .matches-container { background: rgba(0,0,0,0.3); border-radius: 28px; padding: 20px; margin-bottom: 30px; }
+        .match-box { background: rgba(0,0,0,0.5); border-radius: 16px; padding: 15px; margin: 15px 0; border: 1px solid rgba(57,255,20,0.3); }
+        .match-info { display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; }
+        .team { display: flex; align-items: center; gap: 10px; flex: 1; }
         .team:first-child { justify-content: flex-end; }
-        .team-name { 
-            font-weight: bold; 
-            font-size: 1.1rem;
-            background: linear-gradient(135deg, #fff, #ddd);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .live-score {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #39ff14;
-            min-width: 80px;
-            text-align: center;
-            text-shadow: 0 0 5px rgba(57,255,20,0.3);
-        }
-        .team-logo { width: 30px; height: 30px; object-fit: contain; }
-        .match-details {
-            font-size: 0.7rem;
-            color: #888;
-            margin-top: 10px;
-            text-align: center;
-        }
-        .error-box {
-            border-color: #ff3b30;
-            text-align: center;
-        }
-        .update-time {
-            text-align: center;
-            font-size: 0.7rem;
-            color: #39ff14;
-            margin-top: 15px;
-            padding-top: 10px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-        .note {
-            background: rgba(255,193,7,0.15);
-            padding: 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            text-align: center;
-            margin-top: 30px;
-            border-right: 3px solid #ffc107;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            font-size: 0.7rem;
-            opacity: 0.6;
-        }
-        @media (max-width: 700px) {
-            body { padding: 12px; }
-            .header h1 { font-size: 1.8rem; }
-            .team-name { font-size: 0.85rem; }
-            .live-score { font-size: 1.2rem; min-width: 60px; }
-            .team-logo { width: 22px; height: 22px; }
-            .match-info { gap: 8px; }
-        }
+        .live-score { font-size: 1.6rem; font-weight: bold; color: #39ff14; min-width: 80px; text-align: center; }
+        .update-time { text-align: center; font-size: 0.7rem; color: #39ff14; margin-top: 15px; }
+        .note, .footer { text-align: center; margin-top: 30px; font-size: 0.8rem; opacity: 0.8; }
+        @media (max-width: 700px) { .live-score { font-size: 1.2rem; } }
     </style>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -179,62 +31,20 @@
         <p>نتائج حية وإحصائيات فورية</p>
         <div class="badge">⚡ تحديث تلقائي من ESPN</div>
     </div>
+    <div class="status">📡 تم تفعيل البث المباشر للنتائج - المباريات محدثة آنياً 🔄</div>
 
-    <div class="status">
-        📡 تم تفعيل البث المباشر للنتائج - المباريات محدثة آنياً 🔄
-    </div>
-
-    <!-- ============================================ -->
-    <!-- DATA_START - منطقة حقن المباريات (لا تمسح هذه العلامات) -->
-    <!-- ============================================ -->
+    <!-- DATA_START -->
     <div class="matches-container">
         <h3 style="margin-bottom: 15px; color: #ffd700;">📺 المباريات الحية والقادمة</h3>
-        
-        <!-- سيتم وضع المباريات هنا تلقائياً عبر سكريبت Python -->
         <div id="live-matches">
-            <div class="match-box">
-                <div class="match-info">
-                    <div class="team">
-                        <span class="team-name">الأرجنتين 🇦🇷</span>
-                    </div>
-                    <div class="live-score"> VS </div>
-                    <div class="team">
-                        <span class="team-name">إسبانيا 🇪🇸</span>
-                    </div>
-                </div>
-                <div class="match-status">📅 في انتظار تحديث المباريات عبر ESPN</div>
-            </div>
+            <div class="match-box"><div class="match-info"><div class="team"><span>🏆 جاري تحميل البيانات...</span></div></div></div>
         </div>
-        
-        <div class="update-time">
-            ⏱️ آخر تحديث: <span id="last-update"><!-- TIME_PLACEHOLDER -->جاري التحميل...<!-- TIME_PLACEHOLDER --></span>
-        </div>
+        <div class="update-time">⏱️ آخر تحديث: <span id="last-update"><!-- TIME_PLACEHOLDER -->جاري التحميل...<!-- TIME_PLACEHOLDER --></span></div>
     </div>
-    <!-- ============================================ -->
-    <!-- DATA_END - نهاية منطقة حقن المباريات -->
-    <!-- ============================================ -->
+    <!-- DATA_END -->
 
-    <div class="note">
-        📌 <strong>ملاحظة:</strong> البث المباشر للفيديو يحتاج تراخيص رسمية. هذه الخدمة تعرض نتائج حية وإحصائيات فورية مجاناً عبر ESPN.<br>
-        🥅 يتم تحديث البيانات تلقائياً كل 10 دقائق
-    </div>
-    <div class="footer">
-        كأس العالم 2026 - متابعة حية للنتائج | جميع الحقوق محفوظة لمصادر البيانات الأصلية
-    </div>
+    <div class="note">📌 بيانات حية ومجانية من ESPN. يتم تحديث النتائج تلقائياً كل 10 دقائق.</div>
+    <div class="footer">كأس العالم 2026 - متابعة حية للنتائج</div>
 </div>
-
-<script>
-    // تحديث وقت العرض من التوقيت المخزن
-    function updateDisplayTime() {
-        const timeSpan = document.getElementById('last-update');
-        if (timeSpan) {
-            const timeText = timeSpan.innerText;
-            if (timeText && timeText !== 'جاري التحميل...') {
-                console.log('آخر تحديث: ' + timeText);
-            }
-        }
-    }
-    updateDisplayTime();
-</script>
 </body>
 </html>
