@@ -5,15 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>World Cup 2026 | AI Premium Hub</title>
     
-    <!-- Meta للـ PWA والسيو الصاروخي -->
+    <!-- Meta للـ PWA والسيو -->
     <meta name="theme-color" content="#0a0a0a">
-    <meta name="description" content="منصة كأس العالم 2026 الذكية - متابعة حية، توقعات الجماهير، ومولد محتوى السيو الاحترافي.">
+    <meta name="description" content="منصة كأس العالم 2026 الذكية - بث مباشر للمباريات، توقعات الجماهير، ومولد محتوى السيو الاحترافي.">
     <meta name="apple-mobile-web-app-capable" content="yes">
     
     <!-- الخطوط -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+
+    <!-- HLS Video Player Library -->
+    <link href="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
 
     <style>
         :root {
@@ -37,7 +41,7 @@
         body {
             background-color: var(--bg-deep);
             color: var(--text-main);
-            padding-bottom: 80px;
+            padding-bottom: 120px;
         }
 
         /* --- Header --- */
@@ -89,6 +93,105 @@
             color: var(--text-main);
             border-right: 4px solid var(--neon-green);
             padding-right: 8px;
+        }
+
+        /* === قسم البث المباشر للفيديو === */
+        .video-player-section {
+            background: #0a0a0a;
+            border: 2px solid var(--neon-green);
+            border-radius: 12px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+        }
+
+        .video-player-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* نسبة 16:9 */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-player-wrapper video,
+        .video-player-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .live-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #e74c3c;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            z-index: 100;
+            animation: pulse 1.5s infinite;
+        }
+
+        .live-badge::before {
+            content: '●';
+            font-size: 0.9rem;
+        }
+
+        .video-info {
+            padding: 15px;
+            background: #111111;
+        }
+
+        .video-title {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--neon-green);
+            margin-bottom: 8px;
+        }
+
+        .video-meta {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .streams-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .stream-item {
+            background: #161616;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 0.85rem;
+        }
+
+        .stream-item:hover {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+        }
+
+        .stream-item.active {
+            border-color: var(--neon-green);
+            background: rgba(57, 255, 20, 0.1);
+            box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
         }
 
         /* --- قسم المباريات المباشرة --- */
@@ -284,14 +387,17 @@
             justify-content: space-around;
             padding: 10px 0;
             z-index: 1000;
+            overflow-x: auto;
         }
 
         .nav-item {
             color: var(--text-dim);
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             text-decoration: none;
             text-align: center;
             font-weight: bold;
+            white-space: nowrap;
+            padding: 5px 10px;
         }
 
         .nav-item.active {
@@ -313,6 +419,12 @@
         .match-box-new {
             animation: slideIn 0.5s ease-out;
         }
+
+        /* === أيقونات الفيديو === */
+        .video-icon {
+            display: inline-block;
+            margin-right: 5px;
+        }
     </style>
 </head>
 <body>
@@ -320,12 +432,47 @@
     <!-- الهيدر المونديالي -->
     <header>
         <h1>🏆 WORLD CUP 2026</h1>
-        <p>⚡ PREMIUM AUTO-UPDATE HUB ⚡</p>
+        <p>⚡ LIVE STREAMING PREMIUM HUB ⚡</p>
     </header>
 
     <div class="container">
 
-        <!-- 1. مركز المباريات المباشرة مع التحديث التلقائي -->
+        <!-- قسم البث المباشر للفيديو -->
+        <section id="stream-section">
+            <div class="section-title">📺 البث المباشر المباشر</div>
+            
+            <!-- مشغل الفيديو الرئيسي -->
+            <div class="video-player-section">
+                <div class="video-player-wrapper">
+                    <div id="videoContainer" style="position: relative; width: 100%; height: 100%; background: #000;">
+                        <video 
+                            id="videoPlayer" 
+                            controls 
+                            style="width: 100%; height: 100%; object-fit: contain;">
+                            <!-- سيتم تحميل المصدر ديناميكياً -->
+                        </video>
+                        <div class="live-badge" id="liveBadge" style="display: none;">ON AIR</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- معلومات البث -->
+            <div class="video-info">
+                <div class="video-title" id="videoTitle">🏆 البرازيل vs فرنسا - دور النصف النهائي</div>
+                <div class="video-meta">
+                    <span>📊 المشاهدون: <strong id="viewerCount">2,547,893</strong></span>
+                    <span>🌍 جودة: <strong id="qualityBadge">1080p</strong></span>
+                </div>
+            </div>
+
+            <!-- قائمة البث المباشرة -->
+            <label class="form-label" style="margin-top: 15px;">اختر مصدر البث المباشر:</label>
+            <div class="streams-list" id="streamsList">
+                <!-- سيتم ملء البثوث هنا ديناميكياً -->
+            </div>
+        </section>
+
+        <!-- قسم المباريات المباشرة -->
         <section id="live-section">
             <div class="section-title">⚽ مباريات كأس العالم المباشرة اليوم</div>
             
@@ -337,7 +484,6 @@
 
             <!-- منطقة المباريات المباشرة -->
             <div id="matchesContainer">
-                <!-- سيتم ملء هذا القسم تلقائياً بواسطة JavaScript -->
                 <div class="match-box">
                     <div class="match-info">
                         <div class="team-name">الأرجنتين 🇦🇷</div>
@@ -352,14 +498,14 @@
             <div class="last-update" id="lastUpdate">آخر تحديث تلقائي: الآن قيد التفعيل...</div>
         </section>
 
-        <!-- 2. مصنع محتوى الـ SEO المؤتمت -->
+        <!-- مصنع محتوى الـ SEO -->
         <section id="seo-section">
             <div class="section-title">✍️ مصنع مقالات المونديال (SEO Factory)</div>
             
             <label class="form-label">الحدث الرياضي / عنوان المباراة</label>
             <input type="text" id="matchTitle" class="input-field" placeholder="مثال: قمة البرازيل وفرنسا ربع النهائي">
 
-            <label class="form-label">نوع المقال المفضل لعناكب جوجل</label>
+            <label class="form-label">نوع المقا�� المفضل لعناكب جوجل</label>
             <select id="articleType">
                 <option value="analysis">تحليل تكتيكي شامل للمباراة</option>
                 <option value="news">تغطية خبرية عاجلة وردود أفعال</option>
@@ -376,14 +522,49 @@
 
     <!-- شريط التنقل السفلي -->
     <div class="nav-bar">
-        <a href="#live-section" class="nav-item active">📊 المباريات والتوقعات</a>
-        <a href="#seo-section" class="nav-item">🔥 مصنع المحتوى الذكي</a>
+        <a href="#stream-section" class="nav-item active">📺 البث المباشر</a>
+        <a href="#live-section" class="nav-item">📊 المباريات</a>
+        <a href="#seo-section" class="nav-item">🔥 المحتوى</a>
     </div>
 
     <script>
-        // ===== نظام التحديث التلقائي الذكي =====
-        
-        // بيانات المباريات (يمكن استبدالها بـ API حقيقي)
+        // ===== بيانات البثوث المباشرة =====
+        const streams = [
+            {
+                id: 1,
+                name: 'YouTube Live 🎥',
+                type: 'youtube',
+                url: 'https://www.youtube.com/embed/live_cbr_0WPYrA0?si=YOUR_SESSION_ID',
+                icon: '📺',
+                quality: '1080p'
+            },
+            {
+                id: 2,
+                name: 'HLS Stream 📡',
+                type: 'hls',
+                url: 'https://example.com/stream.m3u8',
+                icon: '📡',
+                quality: '720p'
+            },
+            {
+                id: 3,
+                name: 'Direct Stream 🎬',
+                type: 'video',
+                url: 'https://example.com/stream.mp4',
+                icon: '🎬',
+                quality: '1080p'
+            },
+            {
+                id: 4,
+                name: 'BeIN Sports 🌟',
+                type: 'embed',
+                url: 'https://www.beinsports.com/embed/worldcup',
+                icon: '⭐',
+                quality: '4K'
+            }
+        ];
+
+        // ===== بيانات المباريات =====
         const matchesData = [
             {
                 id: 1,
@@ -423,12 +604,74 @@
             }
         ];
 
-        // دالة عرض المباريات
+        // ===== دالة تحميل البث المباشر =====
+        function loadStream(streamId) {
+            const stream = streams.find(s => s.id === streamId);
+            if (!stream) return;
+
+            const videoPlayer = document.getElementById('videoPlayer');
+            const videoTitle = document.getElementById('videoTitle');
+            const qualityBadge = document.getElementById('qualityBadge');
+            const liveBadge = document.getElementById('liveBadge');
+            const videoContainer = document.getElementById('videoContainer');
+
+            videoTitle.textContent = `${stream.icon} ${stream.name} - كأس العالم 2026`;
+            qualityBadge.textContent = stream.quality;
+
+            // تحديث الـ streamsList 
+            document.querySelectorAll('.stream-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            document.querySelector(`[data-stream-id="${streamId}"]`).classList.add('active');
+
+            // حسب نوع البث
+            if (stream.type === 'youtube') {
+                videoContainer.innerHTML = `<iframe width="100%" height="100%" src="${stream.url}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+                liveBadge.style.display = 'flex';
+            } 
+            else if (stream.type === 'hls') {
+                videoPlayer.src = '';
+                if (Hls.isSupported()) {
+                    const hls = new Hls();
+                    hls.loadSource(stream.url);
+                    hls.attachMedia(videoPlayer);
+                }
+                liveBadge.style.display = 'flex';
+            }
+            else if (stream.type === 'video') {
+                videoContainer.innerHTML = `<video id="videoPlayer" controls style="width: 100%; height: 100%; object-fit: contain;"><source src="${stream.url}" type="video/mp4"></video>`;
+                liveBadge.style.display = 'flex';
+            }
+            else if (stream.type === 'embed') {
+                videoContainer.innerHTML = `<iframe width="100%" height="100%" src="${stream.url}" frameborder="0" allowfullscreen></iframe>`;
+                liveBadge.style.display = 'flex';
+            }
+        }
+
+        // ===== دالة إنشاء قائمة البثوث =====
+        function displayStreams() {
+            const streamsList = document.getElementById('streamsList');
+            streamsList.innerHTML = '';
+
+            streams.forEach(stream => {
+                const streamItem = document.createElement('div');
+                streamItem.className = 'stream-item' + (stream.id === 1 ? ' active' : '');
+                streamItem.setAttribute('data-stream-id', stream.id);
+                streamItem.innerHTML = `${stream.icon} ${stream.name}`;
+                streamItem.onclick = () => loadStream(stream.id);
+                streamsList.appendChild(streamItem);
+            });
+
+            // تحميل البث الأول افتراضياً
+            loadStream(1);
+        }
+
+        // ===== دالة عرض المباريات =====
         function displayMatches() {
             const container = document.getElementById('matchesContainer');
             container.innerHTML = '';
 
-            matchesData.forEach((match, index) => {
+            matchesData.forEach((match) => {
                 const matchBox = document.createElement('div');
                 matchBox.className = 'match-box match-box-new' + (match.isLive ? ' active' : '');
                 
@@ -459,7 +702,7 @@
             });
         }
 
-        // دالة تحديث آخر وقت تحديث
+        // ===== دالة تحديث آخر وقت تحديث =====
         function updateLastUpdateTime() {
             const now = new Date();
             const timeString = now.toLocaleTimeString('ar-EG', { 
@@ -470,28 +713,23 @@
             document.getElementById('lastUpdate').textContent = `آخر تحديث تلقائي: ${timeString}`;
         }
 
-        // دالة محاكاة التحديث التلقائي
+        // ===== دالة التحديث التلقائي =====
         function autoUpdateMatches() {
             const statusDiv = document.getElementById('updateStatus');
             const statusText = document.getElementById('statusText');
             
-            // إظهار حالة التحديث
             statusDiv.classList.add('updating');
             statusText.textContent = 'جاري التحديث التلقائي...';
 
-            // محاكاة تأخير الاتصال بـ API
             setTimeout(() => {
-                // تحديث النتائج بشكل عشوائي لمحاكاة البث المباشر
                 matchesData.forEach(match => {
                     if (match.isLive) {
-                        // تحديث الدقيقة
                         const minutes = parseInt(match.status.match(/\d+/)[0]);
                         if (minutes < 90) {
                             const newMinutes = Math.min(minutes + Math.floor(Math.random() * 2), 90);
                             match.status = match.status.replace(/\d+/, newMinutes);
                         }
                         
-                        // احتمال هدف جديد (نادر)
                         if (Math.random() < 0.1) {
                             match.score1 += Math.random() > 0.5 ? 1 : 0;
                             match.score2 += Math.random() > 0.5 ? 1 : 0;
@@ -499,11 +737,9 @@
                     }
                 });
 
-                // عرض المباريات المحدثة
                 displayMatches();
                 updateLastUpdateTime();
 
-                // العودة لحالة الانتظار
                 statusDiv.classList.remove('updating');
                 statusText.textContent = '✅ تم التحديث بنجاح | التحديث القادم خلال ثواٍ...';
 
@@ -515,7 +751,7 @@
             }, 1000);
         }
 
-        // دالة التحقق من التوقعات
+        // ===== دالة التحقق من التوقعات =====
         function checkPrediction(matchId) {
             const p1Input = event.target.parentElement.querySelector('.predict-input:first-of-type');
             const p2Input = event.target.parentElement.querySelector('.predict-input:last-of-type');
@@ -530,12 +766,11 @@
 
             alert(`🔥 تم تسجيل توقعك بنجاح [${p1} - ${p2}]!\n\nإذا صحت النتيجة ستحصل على 50 نقطة في لوحة الصدارة.`);
             
-            // مسح الحقول بعد التأكيد
             p1Input.value = '';
             p2Input.value = '';
         }
 
-        // دالة توليد مقالات المونديال
+        // ===== دالة توليد المقالات =====
         function generateWorldCupArticle() {
             const title = document.getElementById('matchTitle').value;
             const type = document.getElementById('articleType').value;
@@ -553,17 +788,17 @@
             
             let bodyText = "";
             if(type === "analysis") {
-                bodyText = `📋 الهيكل التحليلي الموصى به لجوجل:\n- مقدمة قوية تجذب القارئ في أول 3 ثوانٍ.\n- ��لفقرة الأولى: القراءة الفنية للمدربين ونقاط القوة والضعف.\n- الفقرة الثانية: مفاتيح اللعب الإستراتيجية التي حسمت اللقاء.\n- الخاتمة: السيناريوهات المتوقعة للمنتخبات في الدور القادم.`;
+                bodyText = `📋 الهيكل التحليلي الموصى به لجوجل:\n- مقدمة قوية تجذب القارئ في أول 3 ثوانٍ.\n- الفقرة الأولى: القراءة الفنية للمدربين ونقاط القوة والضعف.\n- الفقرة الثانية: مفاتيح اللعب الإستراتيجية التي حسمت اللقاء.\n- الخاتمة: السيناريوهات المتوقعة للمنتخبات في الدور القادم.`;
             } else if(type === "news") {
                 bodyText = `📰 التغطية الخبرية العاجلة:\n- رصد فوري لصافرة النهاية وأبرز اللقطات المثيرة للجدل.\n- تصريحات مدربي المنتخبات واللاعبين في المنطقة المختلطة.\n- تحديث فوري لجدول ترتيب المجموعة ونسب الصعود الحالية.`;
             } else {
                 bodyText = `🔮 تقرير التوقعات والذكاء الاصطناعي:\n- استعراض تاريخ المواجهات المباشرة بين الطرفين لتعزيز جودة المقال.\n- نسب الفوز بناءً على معطيات الأداء الحالية ونقاط القوة.\n- تصويت الجماهير وتوقعات خبراء الكورة الإلكترونية والواقعية.`;
             }
 
-            output.innerText = `✨ عنوان المقال المقترح لـ Google SEO:\n💥 ${title} اليوم | التحليل الشامل والترتيب المباشر في كأس العالم 2026\n\n━━━━━━━━━━━━━━━━━━━━\n\n${keywords}\n\n━━━━━━━━━━━━━━━━━━━━\n\n📌 المقدمة الحصرية:\n${intro}\n\n━━━━━━━━━━━━━━━━━━━━\n\n${bodyText}\n\n💪 نصيحة الخبير: انسخ هذا الهيكل، أضف طابعك التحليلي الخاص في دقيقتين، وانشره فورًا ليقفز بك لعناكب البحث الصدارة!`;
+            output.innerText = `✨ عنوان المقال المقترح لـ Google SEO:\n💥 ${title} اليوم | التحليل الشامل والترتيب المباشر في كأس العالم 2026\n\n━━━━━━━━━━━━━━━━━━━━\n\n${keywords}\n\n━━━━━━━━━━━━━━━━━━━━\n\n📌 المقدمة الحصرية:\n${intro}\n\n━━━━━━━━━━━━━━━━━━━━\n\n${bodyText}\n\n💪 نصيحة الخبير: انسخ هذا الهيكل، أضف طابعك التحليلي الخاص في دقيقتين، وانشره فورًا لتقفز لعناكب البحث الصدارة!`;
         }
 
-        // تفعيل التنقل
+        // ===== تفعيل التنقل =====
         const navItems = document.querySelectorAll('.nav-item');
         navItems.forEach(item => {
             item.addEventListener('click', function() {
@@ -574,15 +809,19 @@
 
         // ===== تهيئة التطبيق =====
         document.addEventListener('DOMContentLoaded', function() {
-            // عرض المباريات الأولية
+            displayStreams();
             displayMatches();
             updateLastUpdateTime();
 
-            // تحديث تلقائي كل 10 ثوانٍ
             setInterval(autoUpdateMatches, 10000);
-
-            // تحديث أول مرة بعد 3 ثوانٍ
             setTimeout(autoUpdateMatches, 3000);
+
+            // تحديث عدد المشاهدين كل 5 ثوانٍ
+            setInterval(() => {
+                const viewerCount = document.getElementById('viewerCount');
+                const random = Math.floor(Math.random() * 500000) + 2000000;
+                viewerCount.textContent = random.toLocaleString('ar-EG');
+            }, 5000);
         });
     </script>
 </body>
