@@ -56,13 +56,95 @@
             font-size: 0.9rem;
             border-right: 4px solid #00ff88;
         }
-        .widget-wrapper {
+        .matches-container {
             background: rgba(0,0,0,0.3);
             border-radius: 28px;
-            padding: 15px;
+            padding: 20px;
             backdrop-filter: blur(5px);
             margin-bottom: 30px;
             border: 1px solid rgba(255,255,255,0.1);
+        }
+        /* أنماط المباريات */
+        .match-box {
+            background: rgba(0,0,0,0.5);
+            border-radius: 16px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px solid rgba(57,255,20,0.3);
+            transition: transform 0.2s;
+        }
+        .match-box:hover {
+            transform: translateX(-5px);
+        }
+        .match-box.live-status { 
+            border-right: 4px solid #39ff14;
+            background: rgba(57,255,20,0.05);
+        }
+        .match-box.final-status { opacity: 0.8; }
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.8rem;
+        }
+        .match-time { color: #ffd700; }
+        .match-status-badge {
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .match-status-badge.live-status { background: #39ff14; color: #000; }
+        .match-status-badge.final-status { background: #666; color: #fff; }
+        .match-status-badge.upcoming-status { background: #ff9800; color: #000; }
+        .match-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .team {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+        .team:first-child { justify-content: flex-end; }
+        .team-name { 
+            font-weight: bold; 
+            font-size: 1.1rem;
+            background: linear-gradient(135deg, #fff, #ddd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .live-score {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #39ff14;
+            min-width: 80px;
+            text-align: center;
+            text-shadow: 0 0 5px rgba(57,255,20,0.3);
+        }
+        .team-logo { width: 30px; height: 30px; object-fit: contain; }
+        .match-details {
+            font-size: 0.7rem;
+            color: #888;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .error-box {
+            border-color: #ff3b30;
+            text-align: center;
+        }
+        .update-time {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #39ff14;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
         .note {
             background: rgba(255,193,7,0.15);
@@ -82,9 +164,12 @@
         @media (max-width: 700px) {
             body { padding: 12px; }
             .header h1 { font-size: 1.8rem; }
+            .team-name { font-size: 0.85rem; }
+            .live-score { font-size: 1.2rem; min-width: 60px; }
+            .team-logo { width: 22px; height: 22px; }
+            .match-info { gap: 8px; }
         }
     </style>
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -92,60 +177,64 @@
     <div class="header">
         <h1>🏆 كأس العالم 2026</h1>
         <p>نتائج حية وإحصائيات فورية</p>
-        <div class="badge">⚡ تحديث تلقائي كل 60 ثانية</div>
+        <div class="badge">⚡ تحديث تلقائي من ESPN</div>
     </div>
 
     <div class="status">
         📡 تم تفعيل البث المباشر للنتائج - المباريات محدثة آنياً 🔄
     </div>
 
-    <!-- حاوية عرض النتائج الحية -->
-    <div class="widget-wrapper">
-        <div id="wg-api-football-livescore"
-             data-host="v3.football.api-sports.io"
-             data-refresh="60"
-             data-key="859b540a3cb97232c2e90c788aec0999"
-             data-date=""
-             data-season=""
-             data-theme="dark"
-             data-show-errors="true"
-             data-compact="false"
-             class="api_football_loader">
-            <div style="text-align:center; padding: 50px;">🔄 جاري تحميل نتائج المباريات الحية...</div>
+    <!-- ============================================ -->
+    <!-- DATA_START - منطقة حقن المباريات (لا تمسح هذه العلامات) -->
+    <!-- ============================================ -->
+    <div class="matches-container">
+        <h3 style="margin-bottom: 15px; color: #ffd700;">📺 المباريات الحية والقادمة</h3>
+        
+        <!-- سيتم وضع المباريات هنا تلقائياً عبر سكريبت Python -->
+        <div id="live-matches">
+            <div class="match-box">
+                <div class="match-info">
+                    <div class="team">
+                        <span class="team-name">الأرجنتين 🇦🇷</span>
+                    </div>
+                    <div class="live-score"> VS </div>
+                    <div class="team">
+                        <span class="team-name">إسبانيا 🇪🇸</span>
+                    </div>
+                </div>
+                <div class="match-status">📅 في انتظار تحديث المباريات عبر ESPN</div>
+            </div>
+        </div>
+        
+        <div class="update-time">
+            ⏱️ آخر تحديث: <span id="last-update"><!-- TIME_PLACEHOLDER -->جاري التحميل...<!-- TIME_PLACEHOLDER --></span>
         </div>
     </div>
+    <!-- ============================================ -->
+    <!-- DATA_END - نهاية منطقة حقن المباريات -->
+    <!-- ============================================ -->
 
     <div class="note">
-        📌 <strong>ملاحظة:</strong> البث المباشر للفيديو يحتاج تراخيص رسمية. هذه الخدمة تعرض نتائج حية وإحصائيات فورية مجاناً.<br>
-        🥅 البيانات مقدمة من API-SPORTS (مجانية للاستخدام غير التجاري)
+        📌 <strong>ملاحظة:</strong> البث المباشر للفيديو يحتاج تراخيص رسمية. هذه الخدمة تعرض نتائج حية وإحصائيات فورية مجاناً عبر ESPN.<br>
+        🥅 يتم تحديث البيانات تلقائياً كل 10 دقائق
     </div>
     <div class="footer">
         كأس العالم 2026 - متابعة حية للنتائج | جميع الحقوق محفوظة لمصادر البيانات الأصلية
     </div>
 </div>
 
-<script type="module">
-    // سكريبت تشغيل الـ Widget - يتجنب مشاكل CORS ويحسن التحميل
-    (function() {
-        // إزالة أي script قديم بنفس الـ src
-        const oldScript = document.querySelector('script[src*="widgets.api-sports.io"]');
-        if(oldScript) oldScript.remove();
-        
-        // إضافة script جديد
-        const script = document.createElement('script');
-        script.type = 'module';
-        script.src = 'https://widgets.api-sports.io/football/1.0.0/widget.js';
-        script.async = true;
-        document.body.appendChild(script);
-        
-        // رسالة عند فشل التحميل
-        script.onerror = function() {
-            const container = document.getElementById('wg-api-football-livescore');
-            if(container) {
-                container.innerHTML = '<div style="background:#ff3b3022; padding:20px; border-radius:20px; text-align:center;">⚠️ حدث خطأ في تحميل البث المباشر. تأكد من اتصالك بالإنترنت وحاول تحديث الصفحة.</div>';
+<script>
+    // تحديث وقت العرض من التوقيت المخزن
+    function updateDisplayTime() {
+        const timeSpan = document.getElementById('last-update');
+        if (timeSpan) {
+            const timeText = timeSpan.innerText;
+            if (timeText && timeText !== 'جاري التحميل...') {
+                console.log('آخر تحديث: ' + timeText);
             }
-        };
-    })();
+        }
+    }
+    updateDisplayTime();
 </script>
 </body>
 </html>
