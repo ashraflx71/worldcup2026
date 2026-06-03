@@ -1,220 +1,463 @@
-# توليد ملف متجر السيو المطور مع دمج رابط إنستا باي الرسمي للأستاذ أشرف
-import base64
-
-html_store_with_instapay = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر خدمات السيو والأتمتة | كأس العالم 2026</title>
+    <title>متجر السيو المتطور - كأس العالم 2026</title>
     <style>
-        :root {
-            --bg-main: #050505;
-            --bg-card: #111111;
-            --neon-green: #39ff14;
-            --neon-blue: #00f3ff;
-            --gold-royal: #ffd700;
-            --text-white: #ffffff;
-            --text-dim: #b3b3b3;
-        }
-
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Arial', sans-serif;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: var(--bg-main);
-            color: var(--text-white);
-            padding: 20px 15px 40px 15px;
+            background: linear-gradient(135deg, #0a0f1e, #0a1a2e);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
             line-height: 1.6;
         }
 
-        .header-container {
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
             text-align: center;
+            padding: 40px 20px;
+            background: linear-gradient(135deg, rgba(57,255,20,0.1), rgba(0,243,255,0.1));
+            border-radius: 20px;
             margin-bottom: 30px;
-            padding: 20px;
-            border: 2px solid var(--neon-green);
-            border-radius: 12px;
-            background: linear-gradient(135deg, #0a0a0a 0%, #161616 100%);
-            box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+            border: 1px solid rgba(57,255,20,0.3);
         }
 
-        .header-container h1 {
-            color: var(--neon-green);
-            font-size: 1.8rem;
-            margin-bottom: 8px;
-            text-shadow: 0 0 10px rgba(57, 255, 20, 0.4);
-        }
-
-        .header-container p {
-            color: var(--gold-royal);
-            font-size: 1rem;
-        }
-
-        .price-card {
-            background: var(--bg-card);
-            border: 1px solid #222;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 25px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        .price-card.featured {
-            border: 2px solid var(--gold-royal);
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
-        }
-
-        .badge {
-            background: var(--gold-royal);
-            color: #000;
-            font-size: 0.75rem;
-            font-weight: bold;
-            padding: 3px 10px;
-            border-radius: 4px;
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .price-card h2 {
-            color: var(--text-white);
-            font-size: 1.4rem;
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #39ff14, #00f3ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             margin-bottom: 10px;
         }
 
-        .price-card .cost {
-            font-size: 1.6rem;
-            color: var(--neon-blue);
-            font-weight: bold;
-            margin-bottom: 15px;
+        .orders-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
         }
 
-        .price-card ul {
-            list-style: none;
-            text-align: right;
+        .card {
+            background: rgba(17, 17, 17, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card.featured {
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 30px rgba(255,215,0,0.2);
+        }
+
+        .card h2 {
+            color: #ffd700;
             margin-bottom: 20px;
-            padding: 0 10px;
+            font-size: 1.8rem;
         }
 
-        .price-card ul li {
-            color: var(--text-dim);
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-
-        .price-card ul li::before {
-            content: "✓ ";
-            color: var(--neon-green);
+        .price {
+            font-size: 2.5rem;
+            color: #00f3ff;
+            margin: 20px 0;
             font-weight: bold;
-            margin-left: 5px;
         }
 
-        .action-buttons {
-            display: block;
+        .features {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .features li {
+            margin: 10px 0;
+            padding-right: 25px;
+            position: relative;
+        }
+
+        .features li::before {
+            content: "✓";
+            color: #39ff14;
+            position: absolute;
+            right: 0;
+            font-weight: bold;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .quantity-control button {
+            background: rgba(57,255,20,0.2);
+            border: 1px solid #39ff14;
+            color: #39ff14;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .quantity-control button:hover {
+            background: #39ff14;
+            color: #000;
+        }
+
+        .quantity-control span {
+            font-size: 1.5rem;
+            font-weight: bold;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .total-price {
+            font-size: 1.3rem;
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(0,243,255,0.1);
+            border-radius: 10px;
         }
 
         .btn {
-            display: block;
-            padding: 12px;
-            text-decoration: none;
-            border-radius: 6px;
+            display: inline-block;
+            padding: 12px 24px;
+            margin: 5px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
             font-weight: bold;
-            font-size: 0.95rem;
-            margin-bottom: 10px;
-            transition: all 0.3s ease;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #39ff14, #00f3ff);
+            color: #000;
         }
 
         .btn-whatsapp {
-            background: transparent;
-            color: var(--neon-green);
-            border: 2px solid var(--neon-green);
+            background: #25D366;
+            color: white;
         }
 
         .btn-instapay {
-            background: #1d3557;
-            color: var(--neon-blue);
-            border: 2px solid var(--neon-blue);
+            background: #1a1a2e;
+            border: 1px solid #00f3ff;
+            color: #00f3ff;
         }
 
-        .price-card.featured .btn-whatsapp {
-            color: #000;
-            background: var(--gold-royal);
-            border: 2px solid var(--gold-royal);
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        .back-btn {
-            display: inline-block;
-            margin-top: 10px;
-            color: var(--neon-blue);
-            text-decoration: none;
-            font-size: 0.95rem;
+        .orders-log {
+            background: rgba(0,0,0,0.5);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+
+        .orders-log h3 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .order-item {
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            display: none;
+        }
+
+        .alert-success {
+            background: rgba(57,255,20,0.2);
+            border: 1px solid #39ff14;
+            color: #39ff14;
+        }
+
+        .alert-error {
+            background: rgba(255,0,0,0.2);
+            border: 1px solid #ff0000;
+            color: #ff6666;
+        }
+
+        @media (max-width: 768px) {
+            .orders-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 1.8rem;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        <div class="header">
+            <h1>🛒 مصنع السيو المؤتمت - كأس العالم 2026</h1>
+            <p>محتوى حصري متوافق مع معايير Google News و AdSense</p>
+        </div>
 
-    <div class="header-container">
-        <h1>🛒 مصنع مقالات السيو المؤتمتة 2026</h1>
-        <p>باقات محتوى كروي حصري جاهز للتصدير الفوري والأرشفة السريعة</p>
-    </div>
+        <div id="alert" class="alert"></div>
 
-    <div class="pricing-grid">
+        <div class="orders-grid">
+            <!-- الباقة الأساسية -->
+            <div class="card">
+                <h2>📝 الباقة الأساسية</h2>
+                <div class="price">$10 / مقال</div>
+                <ul class="features">
+                    <li>مقال SEO متكامل</li>
+                    <li>كلمات مفتاحية ذكية</li>
+                    <li>تنسيق HTML نظيف</li>
+                    <li>تسليم خلال 24 ساعة</li>
+                </ul>
+                <div class="quantity-control">
+                    <button onclick="updateQuantity('basic', -1)">-</button>
+                    <span id="basic-qty">0</span>
+                    <button onclick="updateQuantity('basic', 1)">+</button>
+                </div>
+                <div class="total-price" id="basic-total">0 $</div>
+            </div>
 
-        <div class="price-card">
-            <h2>الباقة الأساسية (10 مقالات)</h2>
-            <div class="cost">اتصل لتحديد السعر</div>
-            <ul>
-                <li>10 مقالات حصرية متوافقة مع السيو (SEO)</li>
-                <li>تغطية شاملة للمباريات والتحليلات التكتيكية</li>
-                <li>توزيع ذكي للكلمات المفتاحية الطويلة</li>
-                <li>تصدير بتنسيق HTML نظيف وقابل للنسخ المباشر</li>
-            </ul>
-            <div class="action-buttons">
-                <a href="https://wa.me/201280208018?text=مرحباً%20أستاذ%20أشرف،%20أود%20طلب%20الباقة%20الأساسية%20(10%20مقالات)%20لموقع%20المونديال" class="btn btn-whatsapp" target="_blank">
-                    اتفاق وتفاصيل عبر واتساب 💬
-                </a>
-                <a href="https://ipn.eg/S/ashrafhassan567/instapay/9OQj1p" class="btn btn-instapay" target="_blank">
-                    دفع سريع عبر InstaPay ⚡
-                </a>
+            <!-- الباقة المتقدمة -->
+            <div class="card featured">
+                <h2>⭐ الباقة المتقدمة 🔥</h2>
+                <div class="price">$8 / مقال (50+ مقال)</div>
+                <ul class="features">
+                    <li>جميع مميزات الأساسية</li>
+                    <li>بحث معمق للكلمات المفتاحية</li>
+                    <li>صور محسنة SEO</li>
+                    <li>روابط داخلية ذكية</li>
+                    <li>أولوية التسليم</li>
+                </ul>
+                <div class="quantity-control">
+                    <button onclick="updateQuantity('pro', -1)">-</button>
+                    <span id="pro-qty">0</span>
+                    <button onclick="updateQuantity('pro', 1)">+</button>
+                </div>
+                <div class="total-price" id="pro-total">0 $</div>
+            </div>
+
+            <!-- الباقة الشاملة -->
+            <div class="card">
+                <h2>🚀 الباقة الشاملة</h2>
+                <div class="price">$5 / مقال (200+ مقال)</div>
+                <ul class="features">
+                    <li>جميع مميزات المتقدمة</li>
+                    <li>إنشاء آلي للمحتوى</li>
+                    <li>نشر تلقائي للموقع</li>
+                    <li>دعم فني لمدة شهر</li>
+                    <li>تقرير SEO شامل</li>
+                </ul>
+                <div class="quantity-control">
+                    <button onclick="updateQuantity('premium', -1)">-</button>
+                    <span id="premium-qty">0</span>
+                    <button onclick="updateQuantity('premium', 1)">+</button>
+                </div>
+                <div class="total-price" id="premium-total">0 $</div>
             </div>
         </div>
 
-        <div class="price-card featured">
-            <span class="badge">الأكثر طلباً للقبول في أدسينس 🔥</span>
-            <h2>الباقة الكبرى (100 مقالة)</h2>
-            <div class="cost">اتصل لتحديد السعر</div>
-            <ul>
-                <li>100 مقالة شاملة تغطي كافة مجموعات المونديال</li>
-                <li>حل نهائي لمشكلة "المحتوى منخفض القيمة"</li>
-                <li>توليد أوتوماتيكي سريع لتغطية قوقل نيوز</li>
-                <li>دعم وتحديث مستمر للكلمات المفتاحية الأكثر بحثاً</li>
-            </ul>
-            <div class="action-buttons">
-                <a href="https://wa.me/201280208018?text=مرحباً%20أستاذ%20أشرف،%20أود%20طلب%20الباقة%20الكبرى%20(100%20مقالة)%20وحسم%20قبول%20أدسينس" class="btn btn-whatsapp" target="_blank">
-                    اتفاق وتفاصيل عبر واتساب 💬
-                </a>
-                <a href="https://ipn.eg/S/ashrafhassan567/instapay/9OQj1p" class="btn btn-instapay" target="_blank">
-                    دفع سريع عبر InstaPay ⚡
-                </a>
+        <div style="text-align: center; margin: 30px 0;">
+            <div style="font-size: 1.5rem; margin-bottom: 20px;">
+                الإجمالي الكلي: <strong id="grand-total" style="color: #39ff14;">0 $</strong>
             </div>
+            <button class="btn btn-primary" onclick="saveOrder()">💾 حفظ الطلب محلياً</button>
+            <button class="btn btn-whatsapp" onclick="sendWhatsApp()">📱 إرسال الطلب عبر واتساب</button>
+            <button class="btn btn-instapay" onclick="processInstaPay()">💳 دفع عبر InstaPay</button>
         </div>
 
+        <div class="orders-log">
+            <h3>📋 طلباتي المحفوظة</h3>
+            <div id="orders-list"></div>
+            <button class="btn" onclick="exportOrders()" style="margin-top: 10px;">📥 تصدير الطلبات (JSON)</button>
+        </div>
+
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="index.html" style="color: #00f3ff; text-decoration: none;">← العودة للرئيسية</a>
+        </div>
     </div>
 
-    <div style="text-align: center; margin-top: 20px;">
-        <a href="index.html" class="back-btn">← العودة للرئيسية</a>
-    </div>
+    <script>
+        // حالة الطلب
+        let cart = {
+            basic: { qty: 0, price: 10 },
+            pro: { qty: 0, price: 8 },
+            premium: { qty: 0, price: 5 }
+        };
 
+        let savedOrders = JSON.parse(localStorage.getItem('seoOrders') || '[]');
+
+        function updateQuantity(type, delta) {
+            let newQty = cart[type].qty + delta;
+            if (newQty >= 0) {
+                cart[type].qty = newQty;
+                updateDisplay();
+            }
+        }
+
+        function updateDisplay() {
+            for (let type in cart) {
+                document.getElementById(`${type}-qty`).innerText = cart[type].qty;
+                let total = cart[type].qty * cart[type].price;
+                document.getElementById(`${type}-total`).innerHTML = `${total} $`;
+            }
+            
+            let grandTotal = calculateTotal();
+            document.getElementById('grand-total').innerHTML = `${grandTotal} $`;
+        }
+
+        function calculateTotal() {
+            return cart.basic.qty * cart.basic.price + 
+                   cart.pro.qty * cart.pro.price + 
+                   cart.premium.qty * cart.premium.price;
+        }
+
+        function saveOrder() {
+            let total = calculateTotal();
+            if (total === 0) {
+                showAlert('الرجاء إضافة مقالات للطلب', 'error');
+                return;
+            }
+
+            let order = {
+                id: Date.now(),
+                date: new Date().toLocaleString('ar-EG'),
+                items: {
+                    basic: cart.basic.qty,
+                    pro: cart.pro.qty,
+                    premium: cart.premium.qty
+                },
+                total: total
+            };
+
+            savedOrders.unshift(order);
+            localStorage.setItem('seoOrders', JSON.stringify(savedOrders));
+            displayOrders();
+            showAlert('تم حفظ الطلب بنجاح!', 'success');
+            
+            // إعادة تعيين السلة
+            cart = {
+                basic: { qty: 0, price: 10 },
+                pro: { qty: 0, price: 8 },
+                premium: { qty: 0, price: 5 }
+            };
+            updateDisplay();
+        }
+
+        function displayOrders() {
+            const ordersDiv = document.getElementById('orders-list');
+            if (savedOrders.length === 0) {
+                ordersDiv.innerHTML = '<p>لا توجد طلبات محفوظة</p>';
+                return;
+            }
+
+            ordersDiv.innerHTML = savedOrders.map(order => `
+                <div class="order-item">
+                    <div>
+                        <strong>📅 ${order.date}</strong><br>
+                        أساسي: ${order.items.basic} | متقدم: ${order.items.pro} | شامل: ${order.items.premium}
+                    </div>
+                    <div style="color: #39ff14;">$${order.total}</div>
+                </div>
+            `).join('');
+        }
+
+        function sendWhatsApp() {
+            let total = calculateTotal();
+            if (total === 0) {
+                showAlert('الرجاء إضافة مقالات للطلب', 'error');
+                return;
+            }
+
+            let message = `مرحباً أستاذ أشرف،\nأود طلب:\n`;
+            if (cart.basic.qty > 0) message += `- ${cart.basic.qty} مقال أساسي\n`;
+            if (cart.pro.qty > 0) message += `- ${cart.pro.qty} مقال متقدم\n`;
+            if (cart.premium.qty > 0) message += `- ${cart.premium.qty} مقال شامل\n`;
+            message += `الإجمالي: ${total} $\nللتواصل على الواتساب.`;
+
+            let whatsappUrl = `https://wa.me/201280208018?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function processInstaPay() {
+            let total = calculateTotal();
+            if (total === 0) {
+                showAlert('الرجاء إضافة مقالات للطلب', 'error');
+                return;
+            }
+
+            // رابط إنستا باي الرسمي (تم التحقق من صلاحيته)
+            const instapayUrl = 'https://ipn.eg/S/ashrafhassan567/instapay/9OQj1p';
+            
+            // حفظ الطلب قبل الدفع
+            saveOrder();
+            
+            // فتح رابط الدفع
+            window.open(instapayUrl, '_blank');
+            
+            showAlert('تم فتح رابط الدفع. بعد إتمام الدفع، سيتم التواصل معك خلال 24 ساعة', 'success');
+        }
+
+        function exportOrders() {
+            let dataStr = JSON.stringify(savedOrders, null, 2);
+            let dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+            let exportFileDefaultName = `seo-orders-${new Date().toISOString().slice(0,19)}.json`;
+            
+            let linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+
+        function showAlert(message, type) {
+            const alertDiv = document.getElementById('alert');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.innerHTML = message;
+            alertDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                alertDiv.style.display = 'none';
+            }, 3000);
+        }
+
+        // تحميل الطلبات عند فتح الصفحة
+        displayOrders();
+    </script>
 </body>
-</html>"""
-
-with open("/mnt/data/seo-store.html", "w", encoding="utf-8") as f:
-    f.write(html_store_with_instapay)
-print("Store file with InstaPay generated successfully.")
+</html>
