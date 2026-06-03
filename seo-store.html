@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر السيو المتطور - كأس العالم 2026</title>
+    <meta name="description" content="محتوى SEO احترافي لمونديال 2026. مقالات حصرية متوافقة مع معايير جوجل، توليد آلي للمحتوى، خدمات أرشفة سريعة وقبول في AdSense.">
     <style>
         * {
             margin: 0;
@@ -14,22 +15,23 @@
         body {
             background: linear-gradient(135deg, #0a0f1e, #0a1a2e);
             color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Tajawal', system-ui, sans-serif;
             padding: 20px;
             line-height: 1.6;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
         }
 
+        /* Header */
         .header {
             text-align: center;
-            padding: 40px 20px;
+            padding: 50px 20px;
             background: linear-gradient(135deg, rgba(57,255,20,0.1), rgba(0,243,255,0.1));
-            border-radius: 20px;
-            margin-bottom: 30px;
+            border-radius: 40px;
+            margin-bottom: 40px;
             border: 1px solid rgba(57,255,20,0.3);
         }
 
@@ -39,55 +41,91 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
-        .orders-grid {
+        .header p {
+            color: #ffd700;
+            font-size: 1.2rem;
+        }
+
+        .badge-header {
+            display: inline-block;
+            background: #ff3b30;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
+
+        /* الباقات */
+        .packages-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            margin-bottom: 40px;
+            gap: 30px;
+            margin-bottom: 50px;
         }
 
-        .card {
+        .package-card {
             background: rgba(17, 17, 17, 0.95);
             backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 25px;
+            border-radius: 28px;
+            padding: 30px;
             border: 1px solid rgba(255,255,255,0.1);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
+        .package-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        .card.featured {
+        .package-card.featured {
             border: 2px solid #ffd700;
-            box-shadow: 0 0 30px rgba(255,215,0,0.2);
+            background: linear-gradient(135deg, rgba(255,215,0,0.05), rgba(17,17,17,0.95));
         }
 
-        .card h2 {
-            color: #ffd700;
-            margin-bottom: 20px;
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffd700;
+            color: #000;
+            padding: 5px 20px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .package-card h2 {
             font-size: 1.8rem;
+            margin-bottom: 10px;
+            text-align: center;
         }
 
         .price {
-            font-size: 2.5rem;
+            text-align: center;
+            font-size: 2rem;
             color: #00f3ff;
             margin: 20px 0;
             font-weight: bold;
         }
 
+        .price small {
+            font-size: 0.9rem;
+            color: #888;
+        }
+
         .features {
             list-style: none;
-            margin: 20px 0;
+            margin: 25px 0;
         }
 
         .features li {
-            margin: 10px 0;
-            padding-right: 25px;
+            margin: 12px 0;
+            padding-right: 28px;
             position: relative;
         }
 
@@ -97,367 +135,260 @@
             position: absolute;
             right: 0;
             font-weight: bold;
+            font-size: 1.2rem;
         }
 
-        .quantity-control {
+        .btn-group {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
-        }
-
-        .quantity-control button {
-            background: rgba(57,255,20,0.2);
-            border: 1px solid #39ff14;
-            color: #39ff14;
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1.5rem;
-            transition: all 0.3s;
-        }
-
-        .quantity-control button:hover {
-            background: #39ff14;
-            color: #000;
-        }
-
-        .quantity-control span {
-            font-size: 1.5rem;
-            font-weight: bold;
-            min-width: 60px;
-            text-align: center;
-        }
-
-        .total-price {
-            font-size: 1.3rem;
-            text-align: center;
-            margin: 15px 0;
-            padding: 10px;
-            background: rgba(0,243,255,0.1);
-            border-radius: 10px;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 25px;
         }
 
         .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            margin: 5px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1rem;
+            display: block;
+            padding: 14px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 60px;
             font-weight: bold;
             transition: all 0.3s;
-            text-decoration: none;
-            text-align: center;
+            cursor: pointer;
+        }
+
+        .btn-whatsapp {
+            background: transparent;
+            border: 2px solid #25D366;
+            color: #25D366;
+        }
+
+        .btn-whatsapp:hover {
+            background: #25D366;
+            color: #000;
+        }
+
+        .btn-instapay {
+            background: transparent;
+            border: 2px solid #00f3ff;
+            color: #00f3ff;
+        }
+
+        .btn-instapay:hover {
+            background: #00f3ff;
+            color: #000;
         }
 
         .btn-primary {
             background: linear-gradient(135deg, #39ff14, #00f3ff);
             color: #000;
+            border: none;
         }
 
-        .btn-whatsapp {
-            background: #25D366;
-            color: white;
+        /* مميزات إضافية */
+        .extra-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 50px 0;
         }
 
-        .btn-instapay {
-            background: #1a1a2e;
-            border: 1px solid #00f3ff;
-            color: #00f3ff;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
-
-        .orders-log {
-            background: rgba(0,0,0,0.5);
+        .feature-box {
+            background: rgba(255,255,255,0.03);
             border-radius: 20px;
-            padding: 20px;
-            margin-top: 30px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .orders-log h3 {
+        .feature-box h3 {
             color: #ffd700;
             margin-bottom: 15px;
         }
 
-        .order-item {
-            background: rgba(255,255,255,0.05);
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 10px;
+        /* نموذج الطلب السريع */
+        .quick-order {
+            background: rgba(0,0,0,0.5);
+            border-radius: 28px;
+            padding: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .quick-order h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .order-form {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
         }
 
-        .alert {
-            padding: 15px;
-            border-radius: 10px;
-            margin: 10px 0;
-            display: none;
+        .order-form input, .order-form select {
+            padding: 12px 20px;
+            border-radius: 60px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            font-size: 1rem;
+            min-width: 200px;
         }
 
-        .alert-success {
-            background: rgba(57,255,20,0.2);
-            border: 1px solid #39ff14;
-            color: #39ff14;
+        .order-form input:focus, .order-form select:focus {
+            outline: none;
+            border-color: #39ff14;
         }
 
-        .alert-error {
-            background: rgba(255,0,0,0.2);
-            border: 1px solid #ff0000;
-            color: #ff6666;
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.8rem;
+            opacity: 0.7;
         }
 
-        @media (max-width: 768px) {
-            .orders-grid {
-                grid-template-columns: 1fr;
-            }
-            .header h1 {
-                font-size: 1.8rem;
-            }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #00f3ff;
+            text-decoration: none;
+        }
+
+        @media (max-width: 700px) {
+            .header h1 { font-size: 1.8rem; }
+            .package-card h2 { font-size: 1.4rem; }
+            .price { font-size: 1.5rem; }
         }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
+        <!-- الهيدر -->
         <div class="header">
-            <h1>🛒 مصنع السيو المؤتمت - كأس العالم 2026</h1>
-            <p>محتوى حصري متوافق مع معايير Google News و AdSense</p>
+            <h1>🛒 مصنع السيو المؤتمت</h1>
+            <p>محتوى كروي حصري - متوافق مع معايير Google News و AdSense</p>
+            <div class="badge-header">⚡ أكثر من 500 مقالة تم تسليمها بنجاح</div>
         </div>
 
-        <div id="alert" class="alert"></div>
-
-        <div class="orders-grid">
+        <!-- الباقات -->
+        <div class="packages-grid">
             <!-- الباقة الأساسية -->
-            <div class="card">
+            <div class="package-card">
                 <h2>📝 الباقة الأساسية</h2>
-                <div class="price">$10 / مقال</div>
+                <div class="price">$8 <small>/ مقال</small></div>
                 <ul class="features">
-                    <li>مقال SEO متكامل</li>
-                    <li>كلمات مفتاحية ذكية</li>
+                    <li>10 مقالات حصرية SEO</li>
+                    <li>توزيع ذكي للكلمات المفتاحية</li>
                     <li>تنسيق HTML نظيف</li>
                     <li>تسليم خلال 24 ساعة</li>
+                    <li>دعم فني لمدة أسبوع</li>
                 </ul>
-                <div class="quantity-control">
-                    <button onclick="updateQuantity('basic', -1)">-</button>
-                    <span id="basic-qty">0</span>
-                    <button onclick="updateQuantity('basic', 1)">+</button>
+                <div class="btn-group">
+                    <a href="https://wa.me/201280208018?text=مرحباً%20أستاذ%20أشرف،%20أريد%20الباقة%20الأساسية%20(10%20مقالات)" class="btn btn-whatsapp" target="_blank">📱 تواصل عبر واتساب</a>
+                    <a href="https://ipn.eg/S/ashrafhassan567/instapay/9OQj1p" class="btn btn-instapay" target="_blank">💳 دفع عبر InstaPay</a>
                 </div>
-                <div class="total-price" id="basic-total">0 $</div>
             </div>
 
-            <!-- الباقة المتقدمة -->
-            <div class="card featured">
-                <h2>⭐ الباقة المتقدمة 🔥</h2>
-                <div class="price">$8 / مقال (50+ مقال)</div>
+            <!-- الباقة المتقدمة (الأكثر طلباً) -->
+            <div class="package-card featured">
+                <div class="popular-badge">⭐ الأكثر طلباً</div>
+                <h2>🚀 الباقة المتقدمة</h2>
+                <div class="price">$6 <small>/ مقال</small></div>
                 <ul class="features">
-                    <li>جميع مميزات الأساسية</li>
+                    <li>50 مقالة SEO متكاملة</li>
                     <li>بحث معمق للكلمات المفتاحية</li>
-                    <li>صور محسنة SEO</li>
-                    <li>روابط داخلية ذكية</li>
-                    <li>أولوية التسليم</li>
+                    <li>صور محسنة + روابط داخلية</li>
+                    <li>جاهز لنشر فوري</li>
+                    <li>دعم فني لمدة شهر</li>
+                    <li>ملائم لقبول AdSense</li>
                 </ul>
-                <div class="quantity-control">
-                    <button onclick="updateQuantity('pro', -1)">-</button>
-                    <span id="pro-qty">0</span>
-                    <button onclick="updateQuantity('pro', 1)">+</button>
+                <div class="btn-group">
+                    <a href="https://wa.me/201280208018?text=مرحباً%20أستاذ%20أشرف،%20أريد%20الباقة%20المتقدمة%20(50%20مقالة)" class="btn btn-whatsapp" target="_blank">📱 تواصل عبر واتساب</a>
+                    <a href="https://ipn.eg/S/ashrafhassan567/instapay/9OQj1p" class="btn btn-instapay" target="_blank">💳 دفع عبر InstaPay</a>
                 </div>
-                <div class="total-price" id="pro-total">0 $</div>
             </div>
 
             <!-- الباقة الشاملة -->
-            <div class="card">
-                <h2>🚀 الباقة الشاملة</h2>
-                <div class="price">$5 / مقال (200+ مقال)</div>
+            <div class="package-card">
+                <h2>🏆 الباقة الشاملة</h2>
+                <div class="price">$5 <small>/ مقال</small></div>
                 <ul class="features">
-                    <li>جميع مميزات المتقدمة</li>
-                    <li>إنشاء آلي للمحتوى</li>
+                    <li>200+ مقالة شاملة</li>
+                    <li>تغطية كاملة لفرق المونديال</li>
+                    <li>توليد آلي + تحديث مستمر</li>
                     <li>نشر تلقائي للموقع</li>
-                    <li>دعم فني لمدة شهر</li>
+                    <li>دعم فني لمدة 3 أشهر</li>
                     <li>تقرير SEO شامل</li>
                 </ul>
-                <div class="quantity-control">
-                    <button onclick="updateQuantity('premium', -1)">-</button>
-                    <span id="premium-qty">0</span>
-                    <button onclick="updateQuantity('premium', 1)">+</button>
+                <div class="btn-group">
+                    <a href="https://wa.me/201280208018?text=مرحباً%20أستاذ%20أشرف،%20أريد%20الباقة%20الشاملة%20(200+%20مقالة)" class="btn btn-whatsapp" target="_blank">📱 تواصل عبر واتساب</a>
+                    <a href="https://ipn.eg/S/ashrafhassan567/instapay/9OQj1p" class="btn btn-instapay" target="_blank">💳 دفع عبر InstaPay</a>
                 </div>
-                <div class="total-price" id="premium-total">0 $</div>
             </div>
         </div>
 
-        <div style="text-align: center; margin: 30px 0;">
-            <div style="font-size: 1.5rem; margin-bottom: 20px;">
-                الإجمالي الكلي: <strong id="grand-total" style="color: #39ff14;">0 $</strong>
+        <!-- مميزات إضافية -->
+        <div class="extra-features">
+            <div class="feature-box">
+                <h3>📊 تقارير SEO</h3>
+                <p>تقرير مفصل عن أداء مقالاتك وتحليل الكلمات المفتاحية</p>
             </div>
-            <button class="btn btn-primary" onclick="saveOrder()">💾 حفظ الطلب محلياً</button>
-            <button class="btn btn-whatsapp" onclick="sendWhatsApp()">📱 إرسال الطلب عبر واتساب</button>
-            <button class="btn btn-instapay" onclick="processInstaPay()">💳 دفع عبر InstaPay</button>
+            <div class="feature-box">
+                <h3>🤖 توليد آلي</h3>
+                <p>تقنيات ذكاء اصطناعي لتوليد محتوى فريد وسريع</p>
+            </div>
+            <div class="feature-box">
+                <h3>⚡ تسليم فوري</h3>
+                <p>استلم مقالاتك جاهزة للنشر خلال 24 ساعة</p>
+            </div>
+            <div class="feature-box">
+                <h3>🔒 ضمان الجودة</h3>
+                <p>ضمان استرجاع الأموال إذا لم تكن راضياً عن المحتوى</p>
+            </div>
         </div>
 
-        <div class="orders-log">
-            <h3>📋 طلباتي المحفوظة</h3>
-            <div id="orders-list"></div>
-            <button class="btn" onclick="exportOrders()" style="margin-top: 10px;">📥 تصدير الطلبات (JSON)</button>
+        <!-- نموذج طلب سريع -->
+        <div class="quick-order">
+            <h3>📋 طلب سريع</h3>
+            <p>اختر الباقة واترك رقم هاتفك، سنتواصل معك فوراً</p>
+            <form class="order-form" onsubmit="sendQuickOrder(event)">
+                <select id="package-select">
+                    <option value="الباقة الأساسية (10 مقالات)">الباقة الأساسية - 10 مقالات</option>
+                    <option value="الباقة المتقدمة (50 مقالة)">الباقة المتقدمة - 50 مقالة</option>
+                    <option value="الباقة الشاملة (200+ مقالة)">الباقة الشاملة - 200+ مقالة</option>
+                </select>
+                <input type="tel" id="phone-number" placeholder="رقم الواتساب (مثال: 201280208018)" required>
+                <button type="submit" class="btn btn-primary">إرسال الطلب</button>
+            </form>
         </div>
 
-        <div style="text-align: center; margin-top: 20px;">
-            <a href="index.html" style="color: #00f3ff; text-decoration: none;">← العودة للرئيسية</a>
+        <!-- الفوتر -->
+        <div class="footer">
+            <p>© 2026 - جميع الحقوق محفوظة | خدمات السيو والأتمتة للأستاذ أشرف</p>
+            <a href="index.html" class="back-link">← العودة إلى المباريات الحية</a>
         </div>
     </div>
 
     <script>
-        // حالة الطلب
-        let cart = {
-            basic: { qty: 0, price: 10 },
-            pro: { qty: 0, price: 8 },
-            premium: { qty: 0, price: 5 }
-        };
-
-        let savedOrders = JSON.parse(localStorage.getItem('seoOrders') || '[]');
-
-        function updateQuantity(type, delta) {
-            let newQty = cart[type].qty + delta;
-            if (newQty >= 0) {
-                cart[type].qty = newQty;
-                updateDisplay();
-            }
-        }
-
-        function updateDisplay() {
-            for (let type in cart) {
-                document.getElementById(`${type}-qty`).innerText = cart[type].qty;
-                let total = cart[type].qty * cart[type].price;
-                document.getElementById(`${type}-total`).innerHTML = `${total} $`;
+        function sendQuickOrder(event) {
+            event.preventDefault();
+            const packageSelected = document.getElementById('package-select').value;
+            const phone = document.getElementById('phone-number').value;
+            
+            if (!phone) {
+                alert('الرجاء إدخال رقم الهاتف');
+                return;
             }
             
-            let grandTotal = calculateTotal();
-            document.getElementById('grand-total').innerHTML = `${grandTotal} $`;
-        }
-
-        function calculateTotal() {
-            return cart.basic.qty * cart.basic.price + 
-                   cart.pro.qty * cart.pro.price + 
-                   cart.premium.qty * cart.premium.price;
-        }
-
-        function saveOrder() {
-            let total = calculateTotal();
-            if (total === 0) {
-                showAlert('الرجاء إضافة مقالات للطلب', 'error');
-                return;
-            }
-
-            let order = {
-                id: Date.now(),
-                date: new Date().toLocaleString('ar-EG'),
-                items: {
-                    basic: cart.basic.qty,
-                    pro: cart.pro.qty,
-                    premium: cart.premium.qty
-                },
-                total: total
-            };
-
-            savedOrders.unshift(order);
-            localStorage.setItem('seoOrders', JSON.stringify(savedOrders));
-            displayOrders();
-            showAlert('تم حفظ الطلب بنجاح!', 'success');
-            
-            // إعادة تعيين السلة
-            cart = {
-                basic: { qty: 0, price: 10 },
-                pro: { qty: 0, price: 8 },
-                premium: { qty: 0, price: 5 }
-            };
-            updateDisplay();
-        }
-
-        function displayOrders() {
-            const ordersDiv = document.getElementById('orders-list');
-            if (savedOrders.length === 0) {
-                ordersDiv.innerHTML = '<p>لا توجد طلبات محفوظة</p>';
-                return;
-            }
-
-            ordersDiv.innerHTML = savedOrders.map(order => `
-                <div class="order-item">
-                    <div>
-                        <strong>📅 ${order.date}</strong><br>
-                        أساسي: ${order.items.basic} | متقدم: ${order.items.pro} | شامل: ${order.items.premium}
-                    </div>
-                    <div style="color: #39ff14;">$${order.total}</div>
-                </div>
-            `).join('');
-        }
-
-        function sendWhatsApp() {
-            let total = calculateTotal();
-            if (total === 0) {
-                showAlert('الرجاء إضافة مقالات للطلب', 'error');
-                return;
-            }
-
-            let message = `مرحباً أستاذ أشرف،\nأود طلب:\n`;
-            if (cart.basic.qty > 0) message += `- ${cart.basic.qty} مقال أساسي\n`;
-            if (cart.pro.qty > 0) message += `- ${cart.pro.qty} مقال متقدم\n`;
-            if (cart.premium.qty > 0) message += `- ${cart.premium.qty} مقال شامل\n`;
-            message += `الإجمالي: ${total} $\nللتواصل على الواتساب.`;
-
-            let whatsappUrl = `https://wa.me/201280208018?text=${encodeURIComponent(message)}`;
+            const message = `مرحباً أستاذ أشرف، أريد طلب: ${packageSelected}، رقمي للتواصل: ${phone}`;
+            const whatsappUrl = `https://wa.me/201280208018?text=${encodeURIComponent(message)}`;
             window.open(whatsappUrl, '_blank');
         }
-
-        function processInstaPay() {
-            let total = calculateTotal();
-            if (total === 0) {
-                showAlert('الرجاء إضافة مقالات للطلب', 'error');
-                return;
-            }
-
-            // رابط إنستا باي الرسمي (تم التحقق من صلاحيته)
-            const instapayUrl = 'https://ipn.eg/S/ashrafhassan567/instapay/9OQj1p';
-            
-            // حفظ الطلب قبل الدفع
-            saveOrder();
-            
-            // فتح رابط الدفع
-            window.open(instapayUrl, '_blank');
-            
-            showAlert('تم فتح رابط الدفع. بعد إتمام الدفع، سيتم التواصل معك خلال 24 ساعة', 'success');
-        }
-
-        function exportOrders() {
-            let dataStr = JSON.stringify(savedOrders, null, 2);
-            let dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
-            let exportFileDefaultName = `seo-orders-${new Date().toISOString().slice(0,19)}.json`;
-            
-            let linkElement = document.createElement('a');
-            linkElement.setAttribute('href', dataUri);
-            linkElement.setAttribute('download', exportFileDefaultName);
-            linkElement.click();
-        }
-
-        function showAlert(message, type) {
-            const alertDiv = document.getElementById('alert');
-            alertDiv.className = `alert alert-${type}`;
-            alertDiv.innerHTML = message;
-            alertDiv.style.display = 'block';
-            
-            setTimeout(() => {
-                alertDiv.style.display = 'none';
-            }, 3000);
-        }
-
-        // تحميل الطلبات عند فتح الصفحة
-        displayOrders();
     </script>
 </body>
 </html>
