@@ -3,21 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>World Cup 2026 | AI Premium Hub</title>
+    <title>World Cup 2026 | AI Premium Hub - اربح من المحتوى</title>
     
-    <!-- Meta للـ PWA والسيو -->
+    <!-- Meta لتهيئة الـ PWA والسيو الصاروخي -->
     <meta name="theme-color" content="#0a0a0a">
-    <meta name="description" content="منصة كأس العالم 2026 الذكية - بث مباشر للمباريات، توقعات الجماهير، ومولد محتوى السيو الاحترافي.">
+    <meta name="description" content="منصة كأس العالم 2026 الذكية - متابعة حية، توقعات الجماهير، ومولد محتوى السيو الاحترافي. اشترك الآن واربح من المحتوى!">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"></script>
+    
+    <!-- Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
     
     <!-- الخطوط -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
-
-    <!-- HLS Video Player Library -->
-    <link href="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest/dist/hls.min.js"></script>
 
     <style>
         :root {
@@ -28,6 +30,7 @@
             --gold-royal: #ffd700;
             --text-main: #ffffff;
             --text-dim: #999999;
+            --premium-gold: #ffb700;
         }
 
         * {
@@ -41,7 +44,7 @@
         body {
             background-color: var(--bg-deep);
             color: var(--text-main);
-            padding-bottom: 120px;
+            padding-bottom: 80px;
         }
 
         /* --- Header --- */
@@ -51,6 +54,13 @@
             text-align: center;
             border-bottom: 3px solid var(--gold-royal);
             box-shadow: 0 4px 20px rgba(255, 215, 0, 0.15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-content {
+            flex: 1;
         }
 
         header h1 {
@@ -65,6 +75,33 @@
             color: var(--neon-blue);
             margin-top: 5px;
             font-weight: bold;
+        }
+
+        .user-status {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-badge {
+            background: #1a1a1a;
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .status-badge.premium {
+            border-color: var(--premium-gold);
+            color: var(--premium-gold);
+        }
+
+        .balance-display {
+            font-size: 0.8rem;
+            color: var(--text-dim);
         }
 
         .container {
@@ -95,287 +132,191 @@
             padding-right: 8px;
         }
 
-        /* === قسم البث المباشر للفيديو === */
-        .video-player-section {
-            background: #0a0a0a;
-            border: 2px solid var(--neon-green);
+        /* --- Premium Badge --- */
+        .premium-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--premium-gold), #ff9500);
+            color: #000;
+            padding: 3px 8px;
             border-radius: 12px;
-            padding: 0;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(57, 255, 20, 0.2);
+            font-size: 0.7rem;
+            font-weight: 900;
+            margin-left: 8px;
+            animation: glow 2s infinite;
         }
 
-        .video-player-wrapper {
-            position: relative;
-            width: 100%;
-            padding-bottom: 56.25%; /* نسبة 16:9 */
-            height: 0;
-            overflow: hidden;
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 5px rgba(255, 183, 0, 0.3); }
+            50% { box-shadow: 0 0 15px rgba(255, 183, 0, 0.8); }
         }
 
-        .video-player-wrapper video,
-        .video-player-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .live-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: #e74c3c;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            z-index: 100;
-            animation: pulse 1.5s infinite;
-        }
-
-        .live-badge::before {
-            content: '●';
-            font-size: 0.9rem;
-        }
-
-        .video-info {
-            padding: 15px;
-            background: #111111;
-        }
-
-        .video-title {
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--neon-green);
-            margin-bottom: 8px;
-        }
-
-        .video-meta {
-            font-size: 0.8rem;
-            color: var(--text-dim);
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-        }
-
-        .streams-list {
+        /* --- Premium Plans --- */
+        .plans-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 15px;
         }
 
-        .stream-item {
-            background: #161616;
-            border: 1px solid #333;
-            border-radius: 8px;
-            padding: 12px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            font-size: 0.85rem;
-        }
-
-        .stream-item:hover {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
-        }
-
-        .stream-item.active {
-            border-color: var(--neon-green);
-            background: rgba(57, 255, 20, 0.1);
-            box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
-        }
-
-        /* --- قسم المباريات المباشرة --- */
-        .match-box {
-            background: #161616;
+        .plan-card {
+            background: #1a1a1a;
+            border: 2px solid #333;
             border-radius: 12px;
             padding: 15px;
-            margin-bottom: 12px;
-            border: 1px solid #252525;
-            transition: all 0.3s ease;
+            text-align: center;
+            transition: all 0.3s;
         }
 
-        .match-box.active {
+        .plan-card:hover {
             border-color: var(--neon-green);
-            box-shadow: 0 0 10px rgba(57, 255, 20, 0.3);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.2);
         }
 
-        .match-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            text-align: center;
+        .plan-card.premium-plan {
+            border-color: var(--premium-gold);
+            background: linear-gradient(135deg, rgba(255, 183, 0, 0.1) 0%, rgba(255, 149, 0, 0.05) 100%);
+            box-shadow: 0 0 15px rgba(255, 183, 0, 0.2);
         }
 
-        .team-name {
-            flex: 1;
+        .plan-name {
             font-weight: 700;
-            font-size: 0.95rem;
-        }
-
-        .live-score {
-            background: #000;
-            padding: 6px 14px;
-            border-radius: 30px;
-            border: 1px solid var(--neon-green);
-            color: var(--neon-green);
-            font-weight: 900;
-            font-size: 1.2rem;
-            min-width: 80px;
-        }
-
-        .match-status {
-            text-align: center;
-            font-size: 0.75rem;
-            margin-top: 8px;
-            color: var(--neon-blue);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .live-dot {
-            width: 8px;
-            height: 8px;
-            background-color: red;
-            border-radius: 50%;
-            animation: pulse 1.2s infinite;
-        }
-
-        /* --- محرك التوقعات --- */
-        .predict-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .predict-input {
-            width: 50px;
-            padding: 8px;
-            background: #000;
-            border: 1px solid #444;
-            border-radius: 6px;
-            color: #fff;
-            text-align: center;
             font-size: 1.1rem;
-            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--gold-royal);
         }
 
-        .predict-input:focus {
-            border-color: var(--neon-blue);
-            outline: none;
+        .plan-price {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--neon-green);
+            margin-bottom: 10px;
         }
 
-        /* --- مصنع محتوى السيو --- */
-        .form-label {
-            font-size: 0.85rem;
+        .plan-price.premium {
+            color: var(--premium-gold);
+        }
+
+        .plan-features {
+            font-size: 0.8rem;
             color: var(--text-dim);
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .input-field, select {
-            width: 100%;
-            padding: 12px;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 8px;
-            color: #fff;
-            font-size: 0.95rem;
+            text-align: right;
             margin-bottom: 15px;
         }
 
-        .input-field:focus {
-            border-color: var(--gold-royal);
-            outline: none;
+        .plan-features li {
+            list-style: none;
+            margin-bottom: 5px;
+            color: #aaa;
         }
 
-        .btn-action {
+        .plan-features li:before {
+            content: "✓ ";
+            color: var(--neon-green);
+            font-weight: bold;
+            margin-left: 5px;
+        }
+
+        .btn-subscribe {
             width: 100%;
-            padding: 14px;
-            background: transparent;
-            border: 2px solid var(--gold-royal);
-            color: var(--gold-royal);
-            font-weight: 700;
-            font-size: 1rem;
+            padding: 10px;
+            background: var(--neon-green);
+            color: #000;
+            border: none;
             border-radius: 8px;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
         }
 
-        .btn-action:active {
-            background: var(--gold-royal);
-            color: #000;
-            box-shadow: 0 0 15px var(--gold-royal);
-            transform: scale(0.98);
+        .btn-subscribe:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.5);
         }
 
-        .output-box {
-            background: #090909;
+        .btn-subscribe.already-active {
+            background: #666;
+            cursor: not-allowed;
+        }
+
+        /* --- Earnings Dashboard --- */
+        .earnings-dashboard {
+            background: linear-gradient(135deg, rgba(255, 183, 0, 0.1) 0%, rgba(57, 255, 20, 0.1) 100%);
+            border: 2px solid var(--premium-gold);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .earnings-stat {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .stat-box {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--neon-green);
+        }
+
+        /* --- Affiliate Links --- */
+        .affiliate-section {
+            background: #1a1a1a;
             border: 1px dashed var(--neon-blue);
             border-radius: 8px;
             padding: 15px;
             margin-top: 15px;
-            display: none;
-            font-size: 0.9rem;
-            white-space: pre-line;
-            max-height: 250px;
-            overflow-y: auto;
         }
 
-        /* --- شريط التحديث الحي --- */
-        .update-status {
+        .affiliate-link {
+            display: block;
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 8px;
+            text-decoration: none;
+            color: var(--neon-blue);
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+
+        .affiliate-link:hover {
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+        }
+
+        /* --- Ad Placeholder --- */
+        .ad-space {
+            background: #1a1a1a;
+            border: 2px dashed #444;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+            min-height: 100px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 10px;
-            background: rgba(57, 255, 20, 0.1);
-            border: 1px solid var(--neon-green);
-            border-radius: 8px;
-            font-size: 0.85rem;
-            color: var(--neon-green);
-            margin-bottom: 15px;
-        }
-
-        .update-status.updating {
-            background: rgba(0, 243, 255, 0.1);
-            border-color: var(--neon-blue);
-            color: var(--neon-blue);
-        }
-
-        .status-indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--neon-green);
-            animation: pulse 1s infinite;
-        }
-
-        .update-status.updating .status-indicator {
-            background: var(--neon-blue);
-        }
-
-        .last-update {
-            text-align: center;
-            font-size: 0.75rem;
             color: var(--text-dim);
-            margin-top: 10px;
+            font-size: 0.9rem;
         }
 
-        /* --- Navigation Bar --- */
+        /* --- Navigation Bar للهواتف --- */
         .nav-bar {
             position: fixed;
             bottom: 0;
@@ -387,17 +328,15 @@
             justify-content: space-around;
             padding: 10px 0;
             z-index: 1000;
-            overflow-x: auto;
         }
 
         .nav-item {
             color: var(--text-dim);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             text-decoration: none;
             text-align: center;
             font-weight: bold;
-            white-space: nowrap;
-            padding: 5px 10px;
+            flex: 1;
         }
 
         .nav-item.active {
@@ -405,431 +344,281 @@
             text-shadow: 0 0 5px var(--neon-blue);
         }
 
+        /* --- Modal --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-content {
+            background-color: var(--bg-card);
+            margin: 50% auto;
+            transform: translateY(-50%);
+            padding: 20px;
+            border: 2px solid var(--gold-royal);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .close-modal {
+            color: var(--neon-blue);
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
         @keyframes pulse {
             0% { transform: scale(1); opacity: 1; }
             50% { transform: scale(1.3); opacity: 0.4; }
             100% { transform: scale(1); opacity: 1; }
         }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .match-box-new {
-            animation: slideIn 0.5s ease-out;
-        }
-
-        .stream-status {
-            font-size: 0.7rem;
-            color: #27ae60;
-            margin-top: 3px;
-            font-weight: bold;
-        }
     </style>
 </head>
 <body>
 
-    <!-- الهيدر المونديالي -->
+    <!-- الهيدر المونديالي المضيء -->
     <header>
-        <h1>🏆 WORLD CUP 2026</h1>
-        <p>⚡ LIVE STREAMING PREMIUM HUB ⚡</p>
+        <div class="header-content">
+            <h1>🏆 WORLD CUP 2026</h1>
+            <p>⚡ PREMIUM AI WORKSTATION ⚡</p>
+        </div>
+        <div class="user-status">
+            <div class="status-badge" id="userBadge">مجاني</div>
+            <div class="balance-display" id="balanceDisplay">الرصيد: $0.00</div>
+        </div>
     </header>
 
     <div class="container">
 
-        <!-- قسم البث المباشر للفيديو -->
-        <section id="stream-section">
-            <div class="section-title">📺 البث المباشر للمباريات</div>
+        <!-- إعلانات Google AdSense -->
+        <div class="ad-space">
+            💰 إعلان Google AdSense
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
+
+        <!-- 📊 لوحة الأرباح (للمشتركين المدفوعين فقط) -->
+        <section id="earnings-section" style="display: none;">
+            <div class="section-title">💰 لوحة الأرباح <span class="premium-badge">PREMIUM</span></div>
             
-            <!-- مشغل الفيديو الرئيسي -->
-            <div class="video-player-section">
-                <div class="video-player-wrapper">
-                    <div id="videoContainer" style="position: relative; width: 100%; height: 100%; background: #000;">
-                        <video 
-                            id="videoPlayer" 
-                            controls 
-                            style="width: 100%; height: 100%; object-fit: contain;">
-                        </video>
-                        <div class="live-badge" id="liveBadge" style="display: none;">ON AIR</div>
+            <div class="earnings-dashboard">
+                <div class="earnings-stat">
+                    <div class="stat-box">
+                        <div class="stat-label">الأرباح الكلية</div>
+                        <div class="stat-value" id="totalEarnings">$0.00</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">هذا الشهر</div>
+                        <div class="stat-value" id="monthEarnings">$0.00</div>
+                    </div>
+                </div>
+                <div class="earnings-stat">
+                    <div class="stat-box">
+                        <div class="stat-label">عدد المقالات</div>
+                        <div class="stat-value" id="articlesCount">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-label">التوقعات الصحيحة</div>
+                        <div class="stat-value" id="correctPredictions">0</div>
                     </div>
                 </div>
             </div>
-
-            <!-- معلومات البث -->
-            <div class="video-info">
-                <div class="video-title" id="videoTitle">🏆 البرازيل vs فرنسا - دور النصف النهائي</div>
-                <div class="video-meta">
-                    <span>📊 المشاهدون: <strong id="viewerCount">2,547,893</strong></span>
-                    <span>🌍 جودة: <strong id="qualityBadge">1080p</strong></span>
-                </div>
-            </div>
-
-            <!-- قائمة البث المباشرة -->
-            <label class="form-label" style="margin-top: 15px;">اختر مصدر البث المباشر:</label>
-            <div class="streams-list" id="streamsList">
-                <!-- سيتم ملء البثوث هنا ديناميكياً -->
-            </div>
         </section>
 
-        <!-- قسم المباريات المباشرة -->
-        <section id="live-section">
-            <div class="section-title">⚽ مباريات كأس العالم المباشرة اليوم</div>
+        <!-- 3. خطط الاشتراك والأسعار -->
+        <section id="pricing-section">
+            <div class="section-title">💎 خطط الاشتراك</div>
             
-            <!-- حالة التحديث -->
-            <div class="update-status" id="updateStatus">
-                <div class="status-indicator"></div>
-                <span id="statusText">جاهز للتحديث التلقائي الفوري...</span>
-            </div>
-
-            <!-- منطقة المباريات المباشرة -->
-            <div id="matchesContainer">
-                <div class="match-box">
-                    <div class="match-info">
-                        <div class="team-name">الأرجنتين 🇦🇷</div>
-                        <div class="live-score"> VS </div>
-                        <div class="team-name">إسبانيا 🇪🇸</div>
+            <div class="plans-container">
+                <!-- خطة مجانية -->
+                <div class="plan-card">
+                    <div class="plan-name">مجاني</div>
+                    <div class="plan-price">$0</div>
+                    <div class="plan-features">
+                        <ul>
+                            <li>3 مقالات يومية</li>
+                            <li>توقعات محدودة</li>
+                            <li>إعلانات</li>
+                        </ul>
                     </div>
-                    <div class="match-status">📅 جاري التحميل...</div>
+                    <button class="btn-subscribe already-active" onclick="alert('أنت بالفعل على الخطة المجانية')">نشط ✓</button>
+                </div>
+
+                <!-- خطة مدفوعة -->
+                <div class="plan-card premium-plan">
+                    <div class="plan-name" style="color: var(--premium-gold);">💫 PREMIUM</div>
+                    <div class="plan-price premium">$9.99</div>
+                    <div class="plan-features">
+                        <ul>
+                            <li>مقالات غير محدودة</li>
+                            <li>لوحة أرباح</li>
+                            <li>بدون إعلانات</li>
+                        </ul>
+                    </div>
+                    <button class="btn-subscribe" onclick="subscribePremium()">اشترك الآن</button>
                 </div>
             </div>
-
-            <!-- معلومات آخر تحديث -->
-            <div class="last-update" id="lastUpdate">آخر تحديث تلقائي: الآن قيد التفعيل...</div>
         </section>
 
-        <!-- مصنع محتوى الـ SEO -->
-        <section id="seo-section">
-            <div class="section-title">✍️ مصنع مقالات المونديال (SEO Factory)</div>
+        <!-- روابط إحالة Affiliate -->
+        <section id="affiliate-section">
+            <div class="section-title">🛍️ برامج الإحالة والدخل الإضافي</div>
             
-            <label class="form-label">الحدث الرياضي / عنوان المباراة</label>
-            <input type="text" id="matchTitle" class="input-field" placeholder="مثال: قمة البرازيل وفرنسا ربع النهائي">
-
-            <label class="form-label">نوع المقال المفضل لعناكب جوجل</label>
-            <select id="articleType">
-                <option value="analysis">تحليل تكتيكي شامل للمباراة</option>
-                <option value="news">تغطية خبرية عاجلة وردود أفعال</option>
-                <option value="predictions">تقرير التوقعات وفرص تأهل المنتخبات</option>
-            </select>
-
-            <button class="btn-action" onclick="generateWorldCupArticle()">⚡ توليد هيكل المقال الحصري فوريًا</button>
-
-            <!-- صندوق إخراج ا��مقال -->
-            <div class="output-box" id="articleOutput"></div>
+            <div class="affiliate-section" id="affiliateSection">
+                <div style="font-weight: bold; margin-bottom: 10px; color: var(--premium-gold);">منتجات موصى بها للربح:</div>
+                <a href="https://amazon.ae/s?k=football+2026&ref=ashraflx71" class="affiliate-link" target="_blank">⚽ كرات قدم أصلية - اربح 5% عمولة</a>
+                <a href="https://noon.com/en/uae?ref=ashraflx71" class="affiliate-link" target="_blank">👕 ملابس الفرق - اربح 3% عمولة</a>
+                <a href="https://aliexpress.com/affiliate/ashraflx71" class="affiliate-link" target="_blank">🎁 ملحقات رياضية - اربح 8% عمولة</a>
+                <a href="https://taboola.com/?utm_source=worldcup2026" class="affiliate-link" target="_blank">📊 Taboola - عمولة لكل نقرة</a>
+                <a href="https://www.2checkout.com/?ref=ashraflx71" class="affiliate-link" target="_blank">💳 2Checkout - منصة دفع عالمية</a>
+            </div>
         </section>
+
+        <!-- إعلانات إضافية -->
+        <div class="ad-space">
+            💰 إعلان Google AdSense آخر
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+                 data-ad-slot="2345678901"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+        </div>
 
     </div>
 
-    <!-- شريط التنقل السفلي -->
+    <!-- بار التنقل السفلي -->
     <div class="nav-bar">
-        <a href="#stream-section" class="nav-item active">📺 البث المباشر</a>
-        <a href="#live-section" class="nav-item">📊 المباريات</a>
-        <a href="#seo-section" class="nav-item">🔥 المحتوى</a>
+        <a href="#pricing-section" class="nav-item active">💎 الأسعار</a>
+        <a href="#affiliate-section" class="nav-item">🛍️ الإحالات</a>
+        <a href="#earnings-section" class="nav-item" id="earningsNav">💰 الأرباح</a>
+    </div>
+
+    <!-- Modal للدفع -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 style="color: var(--gold-royal); margin-bottom: 20px;">الترقية إلى Premium</h2>
+            <p style="margin-bottom: 15px; color: var(--text-dim);">تمتع بالمزايا الممتازة!</p>
+            
+            <div id="card-element" style="background: #1a1a1a; padding: 15px; border-radius: 8px; margin-bottom: 15px;"></div>
+            
+            <button onclick="processPayment()" class="btn-action" style="background: var(--neon-green); color: #000; padding: 14px; width: 100%; border: 2px solid var(--neon-green); border-radius: 8px; font-weight: 700;">
+                ادفع الآن - $9.99
+            </button>
+        </div>
     </div>
 
     <script>
-        // ===== بيانات البثوث المباشرة مع روابط حقيقية =====
-        const streams = [
-            {
-                id: 1,
-                name: '🎬 YouTube Live',
-                type: 'youtube',
-                url: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-                icon: '📺',
-                quality: '1080p',
-                status: '✅ متاح'
-            },
-            {
-                id: 2,
-                name: '⚽ Twitch Stream',
-                type: 'embed',
-                url: 'https://www.twitch.tv/embed/esl_csgo/chat?parent=example.com',
-                icon: '🎮',
-                quality: '720p',
-                status: '✅ متاح'
-            },
-            {
-                id: 3,
-                name: '🌍 Facebook Live',
-                type: 'embed',
-                url: 'https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/facebook/videos/10159169065495553/&show_text=false&width=500',
-                icon: '📱',
-                quality: '1080p',
-                status: '✅ متاح'
-            },
-            {
-                id: 4,
-                name: '🎥 ESPN+',
-                type: 'embed',
-                url: 'https://www.espn.com/watch/',
-                icon: '🏈',
-                quality: '4K',
-                status: '⏳ قريباً'
-            }
-        ];
+        // ===== إدارة الاشتراكات والمستخدمين =====
+        let currentUser = {
+            isPremium: localStorage.getItem('isPremium') === 'true',
+            earnings: parseFloat(localStorage.getItem('earnings')) || 0,
+        };
 
-        // ===== بيانات المباريات =====
-        const matchesData = [
-            {
-                id: 1,
-                team1: "البرازيل",
-                flag1: "🇧🇷",
-                team2: "فرنسا",
-                flag2: "🇫🇷",
-                score1: 2,
-                score2: 1,
-                status: "الشوط الثاني - دقيقة 72'",
-                isLive: true,
-                updated: new Date()
-            },
-            {
-                id: 2,
-                team1: "الأرجنتين",
-                flag1: "🇦🇷",
-                team2: "إسبانيا",
-                flag2: "🇪🇸",
-                score1: 0,
-                score2: 0,
-                status: "الشوط الأول - دقيقة 35'",
-                isLive: true,
-                updated: new Date()
-            },
-            {
-                id: 3,
-                team1: "ألمانيا",
-                flag1: "🇩🇪",
-                team2: "إنجلترا",
-                flag2: "🇬🇧",
-                score1: 1,
-                score2: 1,
-                status: "انتهت المباراة - 90'",
-                isLive: false,
-                updated: new Date()
-            }
-        ];
+        function updateUserStatus() {
+            const badge = document.getElementById('userBadge');
+            const balanceDisplay = document.getElementById('balanceDisplay');
+            const earningsSection = document.getElementById('earnings-section');
+            const earningsNav = document.getElementById('earningsNav');
 
-        // ===== دالة تحميل البث المباشر =====
-        function loadStream(streamId) {
-            const stream = streams.find(s => s.id === streamId);
-            if (!stream) return;
-
-            const videoPlayer = document.getElementById('videoPlayer');
-            const videoTitle = document.getElementById('videoTitle');
-            const qualityBadge = document.getElementById('qualityBadge');
-            const liveBadge = document.getElementById('liveBadge');
-            const videoContainer = document.getElementById('videoContainer');
-
-            videoTitle.textContent = `${stream.icon} ${stream.name} - كأس العالم 2026`;
-            qualityBadge.textContent = stream.quality;
-
-            // تحديث الـ streamsList 
-            document.querySelectorAll('.stream-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            document.querySelector(`[data-stream-id="${streamId}"]`).classList.add('active');
-
-            // حسب نوع البث
-            if (stream.type === 'youtube') {
-                videoContainer.innerHTML = `<iframe width="100%" height="100%" src="${stream.url}?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
-                liveBadge.style.display = 'flex';
-            } 
-            else if (stream.type === 'hls') {
-                videoPlayer.src = '';
-                if (typeof Hls !== 'undefined' && Hls.isSupported()) {
-                    const hls = new Hls();
-                    hls.loadSource(stream.url);
-                    hls.attachMedia(videoPlayer);
-                }
-                liveBadge.style.display = 'flex';
-            }
-            else if (stream.type === 'video') {
-                videoContainer.innerHTML = `<video controls style="width: 100%; height: 100%; object-fit: contain;"><source src="${stream.url}" type="video/mp4"></video>`;
-                liveBadge.style.display = 'flex';
-            }
-            else if (stream.type === 'embed') {
-                videoContainer.innerHTML = `<iframe width="100%" height="100%" src="${stream.url}" frameborder="0" allowfullscreen allow="autoplay"></iframe>`;
-                liveBadge.style.display = 'flex';
-            }
-        }
-
-        // ===== دالة إنشاء قائمة البثوث =====
-        function displayStreams() {
-            const streamsList = document.getElementById('streamsList');
-            streamsList.innerHTML = '';
-
-            streams.forEach(stream => {
-                const streamItem = document.createElement('div');
-                streamItem.className = 'stream-item' + (stream.id === 1 ? ' active' : '');
-                streamItem.setAttribute('data-stream-id', stream.id);
-                streamItem.innerHTML = `
-                    <div>${stream.icon} ${stream.name}</div>
-                    <div class="stream-status">${stream.status}</div>
-                `;
-                streamItem.onclick = () => loadStream(stream.id);
-                streamsList.appendChild(streamItem);
-            });
-
-            // تحميل البث الأول افتراضياً
-            loadStream(1);
-        }
-
-        // ===== دالة عرض المباريات =====
-        function displayMatches() {
-            const container = document.getElementById('matchesContainer');
-            container.innerHTML = '';
-
-            matchesData.forEach((match) => {
-                const matchBox = document.createElement('div');
-                matchBox.className = 'match-box match-box-new' + (match.isLive ? ' active' : '');
-                
-                const liveIndicator = match.isLive ? '<div class="live-dot"></div>' : '';
-                
-                matchBox.innerHTML = `
-                    <div class="match-info">
-                        <div class="team-name">${match.team1} ${match.flag1}</div>
-                        <div class="live-score">${match.score1} - ${match.score2}</div>
-                        <div class="team-name">${match.team2} ${match.flag2}</div>
-                    </div>
-                    <div class="match-status">
-                        ${match.isLive ? liveIndicator : ''}
-                        ${match.status}
-                    </div>
-                    <div class="predict-row">
-                        <span style="font-size: 0.85rem; color: var(--text-dim);">توقعك المباشر:</span>
-                        <div>
-                            <input type="number" class="predict-input" placeholder="0" min="0">
-                            <span style="color:var(--gold-royal)">-</span>
-                            <input type="number" class="predict-input" placeholder="0" min="0">
-                        </div>
-                        <button class="btn-action" style="padding: 5px 12px; width: auto; font-size: 0.8rem;" onclick="checkPrediction(${match.id})">تأكيد التوقع</button>
-                    </div>
-                `;
-                
-                container.appendChild(matchBox);
-            });
-        }
-
-        // ===== دالة تحديث آخر وقت تحديث =====
-        function updateLastUpdateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString('ar-EG', { 
-                hour: '2-digit', 
-                minute: '2-digit',
-                second: '2-digit'
-            });
-            document.getElementById('lastUpdate').textContent = `آخر تحديث تلقائي: ${timeString}`;
-        }
-
-        // ===== دالة التحديث التلقائي =====
-        function autoUpdateMatches() {
-            const statusDiv = document.getElementById('updateStatus');
-            const statusText = document.getElementById('statusText');
-            
-            statusDiv.classList.add('updating');
-            statusText.textContent = 'جاري التحديث التلقائي...';
-
-            setTimeout(() => {
-                matchesData.forEach(match => {
-                    if (match.isLive) {
-                        const minutes = parseInt(match.status.match(/\d+/)[0]);
-                        if (minutes < 90) {
-                            const newMinutes = Math.min(minutes + Math.floor(Math.random() * 2), 90);
-                            match.status = match.status.replace(/\d+/, newMinutes);
-                        }
-                        
-                        if (Math.random() < 0.1) {
-                            match.score1 += Math.random() > 0.5 ? 1 : 0;
-                            match.score2 += Math.random() > 0.5 ? 1 : 0;
-                        }
-                    }
-                });
-
-                displayMatches();
-                updateLastUpdateTime();
-
-                statusDiv.classList.remove('updating');
-                statusText.textContent = '✅ تم التحديث بنجاح | التحديث القادم خلال ثواٍ...';
-
-                setTimeout(() => {
-                    if (statusText.textContent.includes('تم التحديث')) {
-                        statusText.textContent = 'جاهز للتحديث التلقائي الفوري...';
-                    }
-                }, 3000);
-            }, 1000);
-        }
-
-        // ===== دالة التحقق من التوقعات =====
-        function checkPrediction(matchId) {
-            const p1Input = event.target.parentElement.querySelector('.predict-input:first-of-type');
-            const p2Input = event.target.parentElement.querySelector('.predict-input:last-of-type');
-            
-            const p1 = p1Input.value;
-            const p2 = p2Input.value;
-
-            if(p1 === "" || p2 === "") {
-                alert("برجاء إدخال أرقام التوقع أولاً يا هندسة!");
-                return;
-            }
-
-            alert(`🔥 تم تسجيل توقعك بنجاح [${p1} - ${p2}]!\n\nإذا صحت النتيجة ستحصل على 50 نقطة في لوحة الصدارة.`);
-            
-            p1Input.value = '';
-            p2Input.value = '';
-        }
-
-        // ===== دالة توليد المقالات =====
-        function generateWorldCupArticle() {
-            const title = document.getElementById('matchTitle').value;
-            const type = document.getElementById('articleType').value;
-            const output = document.getElementById('articleOutput');
-
-            if(!title) {
-                alert("برجاء كتابة عنوان أو اسم المباراة أولاً!");
-                return;
-            }
-
-            output.style.display = "block";
-            
-            let intro = `شهدت الساحات الرياضية العالمية اهتمامًا ضخمًا بـ طيات مواجهة (${title}) في نهائيات كأس العالم 2026، حيث يبحث الملايين من عشاق كرة القدم عن تفاصيل هذا اللقاء الناري.`;
-            let keywords = `الكلمات المفتاحية المستهدفة: كأس العالم 2026، بث مباشر ${title}، تحليل مباراة ${title}، ترتيب مجموعات كأس العالم.`;
-            
-            let bodyText = "";
-            if(type === "analysis") {
-                bodyText = `📋 الهيكل التحليلي الموصى به لجوجل:\n- مقدمة قوية تجذب القارئ في أول 3 ثوانٍ.\n- الفقرة الأولى: القراءة الفنية للمدربين ونقاط القوة والضعف.\n- الفقرة الثانية: مفاتيح اللعب الإستراتيجية التي حسمت اللقاء.\n- الخاتمة: السيناريوهات المتوقعة للمنتخبات في الدور القادم.`;
-            } else if(type === "news") {
-                bodyText = `📰 التغطية الخبرية العاجلة:\n- رصد فوري لصافرة النهاية وأبرز اللقطات المثيرة للجدل.\n- تصريحات مدربي المنتخبات واللاعبين في المنطقة المختلطة.\n- تحديث فوري لجدول ترتيب المجموعة ونسب الصعود الحالية.`;
+            if (currentUser.isPremium) {
+                badge.textContent = '⭐ مشترك مدفوع';
+                badge.classList.add('premium');
+                earningsSection.style.display = 'block';
+                earningsNav.style.display = 'block';
             } else {
-                bodyText = `🔮 تقرير التوقعات والذكاء الاصطناعي:\n- استعراض تاريخ المواجهات المباشرة بين الطرفين لتعزيز جودة المقال.\n- نسب الفوز بناءً على معطيات الأداء الحالية ونقاط القوة.\n- تصويت الجماهير وتوقعات خبراء الكورة الإلكترونية والواقعية.`;
+                badge.textContent = 'مجاني';
+                badge.classList.remove('premium');
+                earningsSection.style.display = 'none';
+                earningsNav.style.display = 'none';
             }
 
-            output.innerText = `✨ عنوان المقال المقترح لـ Google SEO:\n💥 ${title} اليوم | التحليل الشامل والترتيب المباشر في كأس العالم 2026\n\n━━━━━━━━━━━━━━━━━━━━\n\n${keywords}\n\n━━━━━━━━━━━━━━━━━━━━\n\n📌 المقدمة الحصرية:\n${intro}\n\n━━━━━━━━━━━━━━━━━━━━\n\n${bodyText}\n\n💪 نصيحة الخبير: انسخ هذا الهيكل، أضف طابعك التحليلي الخاص في دقيقتين، وانشره فورًا لتقفز لعناكب البحث الصدارة!`;
+            balanceDisplay.textContent = `الرصيد: $${currentUser.earnings.toFixed(2)}`;
+            updateEarningsDashboard();
         }
 
-        // ===== تفعيل التنقل =====
+        function updateEarningsDashboard() {
+            document.getElementById('totalEarnings').textContent = `$${currentUser.earnings.toFixed(2)}`;
+            document.getElementById('monthEarnings').textContent = `$${(currentUser.earnings * 0.8).toFixed(2)}`;
+        }
+
+        // ===== Stripe Payment =====
+        const stripe = Stripe('pk_test_YOUR_STRIPE_KEY');
+        const elements = stripe.elements();
+        const cardElement = elements.create('card');
+
+        function subscribePremium() {
+            document.getElementById('paymentModal').style.display = 'block';
+            if (document.getElementById('card-element').children.length === 0) {
+                cardElement.mount('#card-element');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+
+        async function processPayment() {
+            const { token } = await stripe.createToken(cardElement);
+
+            if (token) {
+                alert('✅ تم الاشتراك بنجاح! مرحباً بك في Premium');
+                currentUser.isPremium = true;
+                localStorage.setItem('isPremium', 'true');
+                updateUserStatus();
+                closeModal();
+                
+                currentUser.earnings += 9.99;
+                localStorage.setItem('earnings', currentUser.earnings);
+                updateEarningsDashboard();
+            } else {
+                alert('❌ فشل الدفع. حاول مجددًا');
+            }
+        }
+
+        // ===== الت��قل =====
         const navItems = document.querySelectorAll('.nav-item');
         navItems.forEach(item => {
-            item.addEventListener('click', function() {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
                 navItems.forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
+                
+                const target = this.getAttribute('href');
+                const section = document.querySelector(target);
+                if (section && section.style.display !== 'none') {
+                    section.scrollIntoView({ behavior: 'smooth' });
+                }
             });
         });
 
-        // ===== تهيئة التطبيق =====
-        document.addEventListener('DOMContentLoaded', function() {
-            displayStreams();
-            displayMatches();
-            updateLastUpdateTime();
-
-            setInterval(autoUpdateMatches, 10000);
-            setTimeout(autoUpdateMatches, 3000);
-
-            // تحديث عدد المشاهدين كل 5 ثوانٍ
-            setInterval(() => {
-                const viewerCount = document.getElementById('viewerCount');
-                const random = Math.floor(Math.random() * 500000) + 2000000;
-                viewerCount.textContent = random.toLocaleString('ar-EG');
-            }, 5000);
+        // تحديث الحالة عند تحميل الصفحة
+        window.addEventListener('load', function() {
+            updateUserStatus();
         });
+
+        // إغلاق Modal عند الضغط خارجه
+        window.onclick = function(event) {
+            const modal = document.getElementById('paymentModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
     </script>
 </body>
 </html>
